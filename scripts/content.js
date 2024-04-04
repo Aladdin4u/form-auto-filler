@@ -1,4 +1,10 @@
 const names = ["john", "joe", "cater", "snow"];
+const emails = [
+  "john@example.com",
+  "joe@example.com",
+  "cater@example.com",
+  "snow@example.com",
+];
 const numbers = ["09012345678", "08012345678", "07012345678", "09112345678"];
 const cities = ["new york", "london", "madrid", "lagos"];
 const states = ["new york", "london", "madrid", "lagos"];
@@ -236,9 +242,22 @@ const addresess = ["1600 Pennsylvanna Avenue", "24 Avenue"];
           const variable = randomVariable(country_list);
           element.value = variable;
         }
-      } else if (element.type === "number") {
-        const variable = randomVariable(numbers);
+      } else if (element.type === "email") {
+        const variable = randomVariable(emails);
         element.value = variable;
+      } else if (element.type === "number") {
+        console.log(element.min, element.max);
+        const variable = randomNumber(element.min, element.max);
+        element.value = variable;
+      } else if (element.type === "date") {
+        const variable = randomDate(element.min, element.max);
+        element.value = variable.slice(0, 10);
+      } else if (element.type === "datetime-local") {
+        const variable = randomDate(element.min, element.max);
+        element.value = variable.slice(0, 16);
+      } else if (element.type === "month") {
+        const variable = randomDate(element.min, element.max);
+        element.value = variable.slice(0, 7);
       }
     });
   }
@@ -248,4 +267,26 @@ function randomVariable(data) {
   const random = Math.floor(Math.random() * data.length);
   const value = data[random];
   return value;
+}
+
+function randomNumber(min, max) {
+  const start = min ? Number(min) : 0;
+  const end = max ? Number(max) : 100;
+
+  const newNumber = Math.floor(Math.random() * (end - start) + start);
+
+  return newNumber;
+}
+
+function randomDate(min, max) {
+  const start = min ? new Date(min) : new Date();
+  const end = max ? new Date(max) : new Date();
+
+  const date = new Date(
+    start.getTime() + Math.random() * (end.getTime() - start.getTime())
+  );
+
+  const newDate = new Date(date).toISOString();
+
+  return newDate;
 }
