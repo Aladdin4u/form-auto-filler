@@ -215,7 +215,8 @@ const country_list = [
   "Zambia",
   "Zimbabwe",
 ];
-const addresess = ["1600 Pennsylvanna Avenue", "24 Avenue"];
+const addresses = ["1600 Pennsylvanna Avenue", "24 Avenue"];
+
 (() => {
   const form = document.querySelectorAll("form input");
   if (form) {
@@ -227,49 +228,51 @@ const addresess = ["1600 Pennsylvanna Avenue", "24 Avenue"];
         const state = element.name.toLowerCase() == "state";
         const country = element.name.toLowerCase() == "country";
         if (firstName) {
-          const variable = randomVariable(names);
+          const variable = generateRandomVariable(names);
           element.value = variable;
         } else if (city) {
-          const variable = randomVariable(cities);
+          const variable = generateRandomVariable(cities);
           element.value = variable;
         } else if (address) {
-          const variable = randomVariable(addresess);
+          const variable = generateRandomVariable(addresses);
           element.value = variable;
         } else if (state) {
-          const variable = randomVariable(states);
+          const variable = generateRandomVariable(states);
           element.value = variable;
         } else if (country) {
-          const variable = randomVariable(country_list);
+          const variable = generateRandomVariable(country_list);
           element.value = variable;
         }
       } else if (element.type === "email") {
-        const variable = randomVariable(emails);
+        const variable = generateRandomVariable(emails);
+        element.value = variable;
+      } else if (element.type === "color") {
+        const variable = generateRandomColor();
         element.value = variable;
       } else if (element.type === "number") {
-        console.log(element.min, element.max);
-        const variable = randomNumber(element.min, element.max);
+        const variable = generateRandomNumber(element.min, element.max);
         element.value = variable;
       } else if (element.type === "date") {
-        const variable = randomDate(element.min, element.max);
+        const variable = generateRandomDate(element.min, element.max);
         element.value = variable.slice(0, 10);
       } else if (element.type === "datetime-local") {
-        const variable = randomDate(element.min, element.max);
+        const variable = generateRandomDate(element.min, element.max);
         element.value = variable.slice(0, 16);
       } else if (element.type === "month") {
-        const variable = randomDate(element.min, element.max);
+        const variable = generateRandomDate(element.min, element.max);
         element.value = variable.slice(0, 7);
       }
     });
   }
 })();
 
-function randomVariable(data) {
+function generateRandomVariable(data) {
   const random = Math.floor(Math.random() * data.length);
   const value = data[random];
   return value;
 }
 
-function randomNumber(min, max) {
+function generateRandomNumber(min, max) {
   const start = min ? Number(min) : 0;
   const end = max ? Number(max) : 100;
 
@@ -278,7 +281,7 @@ function randomNumber(min, max) {
   return newNumber;
 }
 
-function randomDate(min, max) {
+function generateRandomDate(min, max) {
   const start = min ? new Date(min) : new Date();
   const end = max ? new Date(max) : new Date();
 
@@ -289,4 +292,30 @@ function randomDate(min, max) {
   const newDate = new Date(date).toISOString();
 
   return newDate;
+}
+
+function generateRandomColor() {
+  const haxArray = [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+  ];
+  let color = "#";
+  for (let i = 0; i < 6; i++) {
+    color += haxArray[Math.floor(Math.random() * haxArray.length)];
+  }
+  return color;
 }
