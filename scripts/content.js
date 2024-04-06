@@ -279,6 +279,9 @@ const addresses = ["1600 Pennsylvanna Avenue", "24 Avenue"];
             element.step
           );
           element.value = variable;
+        } else if (element.type === "time") {
+          const variable = generateRandomDate(element.min, element.max);
+          element.value = variable.slice(11, -8);
         } else if (element.type === "date") {
           const variable = generateRandomDate(element.min, element.max);
           element.value = variable.slice(0, 10);
@@ -293,6 +296,14 @@ const addresses = ["1600 Pennsylvanna Avenue", "24 Avenue"];
           element.value = variable;
         } else if (element.type === "radio") {
           element.checked = true;
+        } else if (element.type === "checkbox") {
+          element.checked = true;
+        } else if (element.type === "url") {
+          const variable = generateRandomUrl();
+          element.value = variable;
+        } else if (element.type === "image") {
+          const variable = generateRandomImage(element.width, element.height, element.name);
+          element.value = variable;
         }
       });
     }
@@ -477,4 +488,27 @@ function generateLoremText() {
     loremText += paragraph.trim() + ". \n";
   }
   return loremText;
+}
+
+function generateRandomUrl() {
+  const url = [
+    "google",
+    "amazon",
+    "apple",
+    "netflix",
+    "yahoo",
+    "facebook",
+    "instagram",
+  ];
+  const randomUrl = url[Math.floor(Math.random() * url.length)];
+
+  return "https://" + randomUrl + ".com";
+}
+
+function generateRandomImage(w,h,n) {
+  const width = w ? w : 100;
+  const height = h ? h : 100;
+  const name = n ? n : "";
+
+  return `https://source.unsplash.com/random/${width}x${height}/?${name}`;
 }
