@@ -223,78 +223,100 @@ const addresses = ["1600 Pennsylvanna Avenue", "24 Avenue"];
   if (form) {
     const formInput = document.querySelectorAll("input");
     const formTextArea = document.querySelectorAll("form textarea");
-    console.log(formInput);
-    formInput.forEach((element) => {
-      if (element.type === "text") {
-        const formName = element.name.toLowerCase();
-        const cityPattern = /cit\w*/g;
-        const statePattern = /state\w*/g;
-        const countryPattern = /countr\w*/g;
-        const addressPattern = /address\w*/g;
-        const namePattern = /\w*(-|\s)?name\w*/g;
-        const name = namePattern.test(formName);
-        const city = cityPattern.test(formName);
-        const state = statePattern.test(formName);
-        const country = countryPattern.test(formName);
-        const address = addressPattern.test(formName);
+    const formSelect = document.querySelectorAll("form select");
+    const formDatalist = document.querySelectorAll("form datalist");
 
-        if (name) {
-          const variable = generateRandomVariable(names);
+    if (formInput) {
+      formInput.forEach((element) => {
+        if (element.type === "text") {
+          const formName = element.name.toLowerCase();
+          const cityPattern = /cit\w*/g;
+          const statePattern = /state\w*/g;
+          const countryPattern = /countr\w*/g;
+          const addressPattern = /address\w*/g;
+          const namePattern = /\w*(-|\s)?name\w*/g;
+          const name = namePattern.test(formName);
+          const city = cityPattern.test(formName);
+          const state = statePattern.test(formName);
+          const country = countryPattern.test(formName);
+          const address = addressPattern.test(formName);
+
+          if (name) {
+            const variable = generateRandomVariable(names);
+            element.value = variable;
+          } else if (city) {
+            const variable = generateRandomVariable(cities);
+            element.value = variable;
+          } else if (address) {
+            const variable = generateRandomVariable(addresses);
+            element.value = variable;
+          } else if (state) {
+            const variable = generateRandomVariable(states);
+            element.value = variable;
+          } else if (country) {
+            const variable = generateRandomVariable(country_list);
+            element.value = variable;
+          } else {
+            return;
+          }
+        } else if (element.type === "email") {
+          const variable = generateRandomVariable(emails);
           element.value = variable;
-        } else if (city) {
-          const variable = generateRandomVariable(cities);
+        } else if (element.type === "color") {
+          const variable = generateRandomColor();
           element.value = variable;
-        } else if (address) {
-          const variable = generateRandomVariable(addresses);
+        } else if (element.type === "number") {
+          const variable = generateRandomNumber(
+            element.min,
+            element.max,
+            element.step
+          );
           element.value = variable;
-        } else if (state) {
-          const variable = generateRandomVariable(states);
+        } else if (element.type === "range") {
+          const variable = generateRandomNumber(
+            element.min,
+            element.max,
+            element.step
+          );
           element.value = variable;
-        } else if (country) {
-          const variable = generateRandomVariable(country_list);
+        } else if (element.type === "date") {
+          const variable = generateRandomDate(element.min, element.max);
+          element.value = variable.slice(0, 10);
+        } else if (element.type === "datetime-local") {
+          const variable = generateRandomDate(element.min, element.max);
+          element.value = variable.slice(0, 16);
+        } else if (element.type === "month") {
+          const variable = generateRandomDate(element.min, element.max);
+          element.value = variable.slice(0, 7);
+        } else if (element.type === "tel") {
+          const variable = generateRandomPhone(element.pattern);
           element.value = variable;
-        } else {
-          return;
+        } else if (element.type === "radio") {
+          element.checked = true;
         }
-      } else if (element.type === "email") {
-        const variable = generateRandomVariable(emails);
-        element.value = variable;
-      } else if (element.type === "color") {
-        const variable = generateRandomColor();
-        element.value = variable;
-      } else if (element.type === "number") {
-        const variable = generateRandomNumber(
-          element.min,
-          element.max,
-          element.step
-        );
-        element.value = variable;
-      } else if (element.type === "range") {
-        const variable = generateRandomNumber(
-          element.min,
-          element.max,
-          element.step
-        );
-        element.value = variable;
-      } else if (element.type === "date") {
-        const variable = generateRandomDate(element.min, element.max);
-        element.value = variable.slice(0, 10);
-      } else if (element.type === "datetime-local") {
-        const variable = generateRandomDate(element.min, element.max);
-        element.value = variable.slice(0, 16);
-      } else if (element.type === "month") {
-        const variable = generateRandomDate(element.min, element.max);
-        element.value = variable.slice(0, 7);
-      } else if (element.type === "tel") {
-        const variable = generateRandomPhone(element.pattern);
-        element.value = variable;
-      }
-    });
+      });
+    }
 
-    formTextArea.forEach((element) => {
-      const variable = generateLoremText();
-      element.value = variable;
-    });
+    if (formTextArea) {
+      formTextArea.forEach((element) => {
+        const variable = generateLoremText();
+        element.value = variable;
+      });
+    }
+
+    if (formSelect) {
+      formSelect.forEach((element) => {
+        const option = generateRandomVariable(element);
+        option.selected = true;
+      });
+    }
+
+    if (formDatalist) {
+      formDatalist.forEach((element) => {
+        const option = generateRandomVariable(element.children);
+        element.previousSibling.previousSibling.value = option.value;
+      });
+    }
   }
 })();
 
