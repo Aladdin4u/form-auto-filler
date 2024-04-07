@@ -341,8 +341,12 @@ const addresses = ["1600 Pennsylvanna Avenue", "24 Avenue"];
   }
 })();
 
+function randomValue(value) {
+  return Math.floor(Math.random() * value.length);
+}
+
 function generateRandomVariable(data) {
-  const random = Math.floor(Math.random() * data.length);
+  const random = randomValue(data);
   const value = data[random];
   return value;
 }
@@ -372,6 +376,7 @@ function generateRandomDate(min, max) {
 }
 
 function generateRandomColor() {
+  let color = "#";
   const haxArray = [
     "0",
     "1",
@@ -390,10 +395,9 @@ function generateRandomColor() {
     "e",
     "f",
   ];
-  let color = "#";
 
   for (let i = 0; i < 6; i++) {
-    color += haxArray[Math.floor(Math.random() * haxArray.length)];
+    color += haxArray[randomValue(haxArray)];
   }
   return color;
 }
@@ -619,17 +623,15 @@ function generateRandomPhone() {
   ];
 
   for (let i = 0; i < 10; i++) {
-    newNumber += numberArray[Math.floor(Math.random() * numberArray.length)];
+    if (newNumber.length == 3) {
+      newNumber += " ";
+    } else if (newNumber.length == 7) {
+      newNumber += " ";
+    }
+    newNumber += numberArray[randomValue(numberArray)];
   }
 
-  const formatedCountryCode = `+ ${
-    countryCode[Math.floor(Math.random() * countryCode.length)]
-  }`;
-
-  const formatedFirstNum = newNumber.slice(0, 3);
-  const formatedMiddleNum = newNumber.slice(3, 6);
-  const formatedLastNum = newNumber.slice(6);
-  const formatNumber = `${formatedCountryCode} ${formatedFirstNum} ${formatedMiddleNum} ${formatedLastNum}`;
+  const formatNumber = `+${countryCode[randomValue(countryCode)]} ${newNumber}`;
 
   return formatNumber;
 }
@@ -637,9 +639,8 @@ function generateRandomPhone() {
 function generateLoremText() {
   const paragraphs = [1, 2, 3, 4, 5];
   const words = [10, 20, 30, 40, 50];
-  const paragraphLength =
-    paragraphs[Math.floor(Math.random() * paragraphs.length)];
-  const wordLength = words[Math.floor(Math.random() * words.length)];
+  const paragraphLength = paragraphs[randomValue(paragraphs)];
+  const wordLength = words[randomValue(words)];
   var loremText = "";
   var wordArray = [
     "Lorem",
@@ -716,7 +717,7 @@ function generateLoremText() {
   for (let i = 0; i < paragraphLength; i++) {
     var paragraph = "";
     for (let j = 0; j < wordLength; j++) {
-      var randomWord = wordArray[Math.floor(Math.random() * wordArray.length)];
+      var randomWord = wordArray[randomValue(wordArray)];
       paragraph += randomWord + " ";
     }
     loremText += paragraph.trim() + ". \n";
@@ -734,7 +735,7 @@ function generateRandomUrl() {
     "facebook",
     "instagram",
   ];
-  const randomUrl = url[Math.floor(Math.random() * url.length)];
+  const randomUrl = url[randomValue(url)];
 
   return "https://" + randomUrl + ".com";
 }
