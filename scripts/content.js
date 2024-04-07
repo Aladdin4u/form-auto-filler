@@ -749,8 +749,15 @@ function generateRandomImage(w, h, n) {
 }
 
 function generateRandomPassword() {
-  return (
-    Math.random().toString(36).slice(2) +
-    Math.random().toString(36).toUpperCase().slice(2)
-  );
+  let password = "";
+  const passwordLength = Math.floor(Math.random() * (32 - 8) + 8);
+  const string =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$_-+=()^*%!~|?/\<>,.";
+
+  for (let i = 0; i < passwordLength; i++) {
+    let character = randomValue(string);
+    password += string.charAt(character);
+  }
+
+  return password;
 }
