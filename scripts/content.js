@@ -5,10 +5,9 @@ const emails = [
   "cater@example.com",
   "snow@example.com",
 ];
-const phones = ["09012345678", "08012345678", "07012345678", "09112345678"];
 const cities = ["new york", "london", "madrid", "lagos"];
 const states = ["new york", "london", "madrid", "lagos"];
-const country_list = [
+const countryList = [
   "Afghanistan",
   "Albania",
   "Algeria",
@@ -254,7 +253,7 @@ const addresses = ["1600 Pennsylvanna Avenue", "24 Avenue"];
             const variable = generateRandomVariable(states);
             element.value = variable;
           } else if (country) {
-            const variable = generateRandomVariable(country_list);
+            const variable = generateRandomVariable(countryList);
             element.value = variable;
           } else {
             return;
@@ -292,7 +291,10 @@ const addresses = ["1600 Pennsylvanna Avenue", "24 Avenue"];
           const variable = generateRandomDate(element.min, element.max);
           element.value = variable.slice(0, 7);
         } else if (element.type === "tel") {
-          const variable = generateRandomPhone(element.pattern);
+          if (element.pattern) {
+            return;
+          }
+          const variable = generateRandomPhone();
           element.value = variable;
         } else if (element.type === "radio") {
           element.checked = true;
@@ -302,8 +304,16 @@ const addresses = ["1600 Pennsylvanna Avenue", "24 Avenue"];
           const variable = generateRandomUrl();
           element.value = variable;
         } else if (element.type === "image") {
-          const variable = generateRandomImage(element.width, element.height, element.name);
+          const variable = generateRandomImage(
+            element.width,
+            element.height,
+            element.name
+          );
+          element.src = variable;
+        } else if (element.type === "password") {
+          const variable = generateRandomPassword();
           element.value = variable;
+          alert(`your password is "${variable}" copy and store.`);
         }
       });
     }
@@ -388,16 +398,240 @@ function generateRandomColor() {
   return color;
 }
 
-function generateRandomPhone(pattern) {
-  const regex = /`${pattern}`/;
+function generateRandomPhone() {
   let newNumber = "";
   const numberArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const countryCode = [
+    "213",
+    "376",
+    "244",
+    "1264",
+    "1268",
+    "54",
+    "374",
+    "297",
+    "61",
+    "43",
+    "994",
+    "1242",
+    "973",
+    "880",
+    "1246",
+    "375",
+    "32",
+    "501",
+    "229",
+    "1441",
+    "975",
+    "591",
+    "387",
+    "267",
+    "55",
+    "673",
+    "359",
+    "226",
+    "257",
+    "855",
+    "237",
+    "1",
+    "238",
+    "1345",
+    "236",
+    "56",
+    "86",
+    "57",
+    "269",
+    "242",
+    "682",
+    "506",
+    "385",
+    "53",
+    "90392",
+    "357",
+    "42",
+    "45",
+    "253",
+    "1809",
+    "1809",
+    "593",
+    "20",
+    "503",
+    "240",
+    "291",
+    "372",
+    "251",
+    "500",
+    "298",
+    "679",
+    "358",
+    "33",
+    "594",
+    "689",
+    "241",
+    "220",
+    "7880",
+    "49",
+    "233",
+    "350",
+    "30",
+    "299",
+    "1473",
+    "590",
+    "671",
+    "502",
+    "224",
+    "245",
+    "592",
+    "509",
+    "504",
+    "852",
+    "36",
+    "354",
+    "91",
+    "62",
+    "98",
+    "964",
+    "353",
+    "972",
+    "39",
+    "1876",
+    "81",
+    "962",
+    "7",
+    "254",
+    "686",
+    "850",
+    "82",
+    "965",
+    "996",
+    "856",
+    "371",
+    "961",
+    "266",
+    "231",
+    "218",
+    "417",
+    "370",
+    "352",
+    "853",
+    "389",
+    "261",
+    "265",
+    "60",
+    "960",
+    "223",
+    "356",
+    "692",
+    "596",
+    "222",
+    "269",
+    "52",
+    "691",
+    "373",
+    "377",
+    "976",
+    "1664",
+    "212",
+    "258",
+    "95",
+    "264",
+    "674",
+    "977",
+    "31",
+    "687",
+    "64",
+    "505",
+    "227",
+    "234",
+    "683",
+    "672",
+    "670",
+    "47",
+    "968",
+    "680",
+    "507",
+    "675",
+    "595",
+    "51",
+    "63",
+    "48",
+    "351",
+    "1787",
+    "974",
+    "262",
+    "40",
+    "7",
+    "250",
+    "378",
+    "239",
+    "966",
+    "221",
+    "381",
+    "248",
+    "232",
+    "65",
+    "421",
+    "386",
+    "677",
+    "252",
+    "27",
+    "34",
+    "94",
+    "290",
+    "1869",
+    "1758",
+    "249",
+    "597",
+    "268",
+    "46",
+    "41",
+    "963",
+    "886",
+    "7",
+    "66",
+    "228",
+    "676",
+    "1868",
+    "216",
+    "90",
+    "7",
+    "993",
+    "1649",
+    "688",
+    "256",
+    "44",
+    "380",
+    "971",
+    "598",
+    "1",
+    "7",
+    "678",
+    "379",
+    "58",
+    "84",
+    "84",
+    "84",
+    "681",
+    "969",
+    "967",
+    "260",
+    "263",
+  ];
 
-  for (let i = 0; i < 11; i++) {
+  for (let i = 0; i < 10; i++) {
     newNumber += numberArray[Math.floor(Math.random() * numberArray.length)];
   }
 
-  return newNumber;
+  const formatedCountryCode = `+ ${
+    countryCode[Math.floor(Math.random() * countryCode.length)]
+  }`;
+
+  const formatedFirstNum = newNumber.slice(0, 3);
+  const formatedMiddleNum = newNumber.slice(3, 6);
+  const formatedLastNum = newNumber.slice(6);
+  const formatNumber = `${formatedCountryCode} ${formatedFirstNum} ${formatedMiddleNum} ${formatedLastNum}`;
+
+  return formatNumber;
 }
 
 function generateLoremText() {
@@ -505,10 +739,17 @@ function generateRandomUrl() {
   return "https://" + randomUrl + ".com";
 }
 
-function generateRandomImage(w,h,n) {
+function generateRandomImage(w, h, n) {
   const width = w ? w : 100;
   const height = h ? h : 100;
   const name = n ? n : "";
 
   return `https://source.unsplash.com/random/${width}x${height}/?${name}`;
+}
+
+function generateRandomPassword() {
+  return (
+    Math.random().toString(36).slice(2) +
+    Math.random().toString(36).toUpperCase().slice(2)
+  );
 }
