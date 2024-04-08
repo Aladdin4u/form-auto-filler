@@ -217,8 +217,17 @@ const countryList = [
 const addresses = ["1600 Pennsylvanna Avenue", "24 Avenue"];
 
 (() => {
-  const form = document.querySelector("form");
+  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.text == "ON") {
+      fillForm();
+    } else {
+      clearForm();
+    }
+  });
+})();
 
+function fillForm() {
+  const form = document.querySelector("form");
   if (form) {
     const formInput = document.querySelectorAll("input");
     const formTextArea = document.querySelectorAll("form textarea");
@@ -339,7 +348,34 @@ const addresses = ["1600 Pennsylvanna Avenue", "24 Avenue"];
       });
     }
   }
-})();
+}
+
+function clearForm() {
+  const form = document.querySelector("form");
+  if (form) {
+    const formInput = document.querySelectorAll("input");
+    const formTextArea = document.querySelectorAll("form textarea");
+    const formSelect = document.querySelectorAll("form select");
+
+    formInput.forEach((element) => {
+      if (element.type === "image") {
+        element.src = "";
+      } else if (element.type === "checkbox" || element.type === "radio") {
+        element.checked = false;
+      } else {
+        element.value = null;
+      }
+    });
+
+    formTextArea.forEach((element) => {
+      element.value = null;
+    });
+
+    formSelect.forEach((element) => {
+      element.selected = false;
+    });
+  }
+}
 
 function randomValue(value) {
   return Math.floor(Math.random() * value.length);
@@ -752,7 +788,7 @@ function generateRandomPassword() {
   let password = "";
   const passwordLength = Math.floor(Math.random() * (32 - 8) + 8);
   const string =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$_-+=()^*%!~|?/\<>,.";
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$_-+=()^*%!~|?/<>,.";
 
   for (let i = 0; i < passwordLength; i++) {
     let character = randomValue(string);
