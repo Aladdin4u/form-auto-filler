@@ -362,6 +362,8 @@ function clearForm() {
         element.src = "";
       } else if (element.type === "checkbox" || element.type === "radio") {
         element.checked = false;
+      } else if (element.type === "color") {
+        element.value = "#000000";
       } else {
         element.value = null;
       }
