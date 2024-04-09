@@ -322,7 +322,12 @@ function fillForm() {
         } else if (element.type === "password") {
           const variable = generateRandomPassword();
           element.value = variable;
-          alert(`your password is "${variable}" copy and store.`);
+
+          createNotification(variable);
+
+          // setTimeout(() => {
+          //   clearNotification();
+          // }, 5000);
         }
       });
     }
@@ -352,6 +357,7 @@ function fillForm() {
 
 function clearForm() {
   const form = document.querySelector("form");
+  clearNotification();
   if (form) {
     const formInput = document.querySelectorAll("input");
     const formTextArea = document.querySelectorAll("form textarea");
@@ -376,6 +382,14 @@ function clearForm() {
     formSelect.forEach((element) => {
       element.selected = false;
     });
+  }
+}
+
+function clearNotification() {
+  const bodyElement = document.querySelector("body");
+  const ifNotificationExist = document.querySelector("#notification");
+  if (ifNotificationExist) {
+    bodyElement.removeChild(ifNotificationExist);
   }
 }
 
@@ -798,4 +812,42 @@ function generateRandomPassword() {
   }
 
   return password;
+}
+
+function createNotification(value) {
+  const bodyElement = document.querySelector("body");
+  const containerElement = document.createElement("div");
+  const divElement = document.createElement("div");
+  const headerElement = document.createElement("span");
+  const passwordElement = document.createElement("span");
+  const copyElement = document.createElement("button");
+
+  containerElement.id = "notification";
+  let containerStyles = `max-width:320px;margin: 4px auto;padding:8px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);`;
+
+  containerElement.style = containerStyles;
+  let divStyles = `display:flex;justify-content: space-between;align-items:center;padding:5px;background-color:#f8f8f8;`;
+  divElement.style = divStyles;
+
+  headerElement.textContent = "Password:";
+  passwordElement.id = "text";
+  passwordElement.textContent = value;
+  copyElement.innerHTML = "&#128203;";
+  copyElement.style = `border-color: #f8f8f8;`;
+  copyElement.onclick = clipboardText(value);
+
+  divElement.appendChild(passwordElement);
+  divElement.appendChild(copyElement);
+
+  containerElement.appendChild(headerElement);
+  containerElement.appendChild(divElement);
+
+  bodyElement.insertAdjacentElement("afterbegin", containerElement);
+}
+
+function clipboardText(value) {
+  let copyText = document.getElementById("text");
+  console.log(copyText);
+
+  navigator.clipboard.writeText(value);
 }
