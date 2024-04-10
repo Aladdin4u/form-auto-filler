@@ -323,11 +323,9 @@ function fillForm() {
           const variable = generateRandomPassword();
           element.value = variable;
 
-          createNotification(variable);
-
-          // setTimeout(() => {
-          //   clearNotification();
-          // }, 5000);
+          setTimeout(() => {
+            createNotification(variable);
+          }, 1000);
         }
       });
     }
@@ -823,7 +821,7 @@ function createNotification(value) {
   const copyElement = document.createElement("button");
 
   containerElement.id = "notification";
-  let containerStyles = `max-width:320px;margin: 4px auto;padding:8px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);`;
+  let containerStyles = `max-width:320px;margin: 4px auto;padding:8px;border-radius:8px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);`;
 
   containerElement.style = containerStyles;
   let divStyles = `display:flex;justify-content: space-between;align-items:center;padding:5px;background-color:#f8f8f8;`;
@@ -833,8 +831,23 @@ function createNotification(value) {
   passwordElement.id = "text";
   passwordElement.textContent = value;
   copyElement.innerHTML = "&#128203;";
-  copyElement.style = `border-color: #f8f8f8;`;
-  copyElement.onclick = clipboardText(value);
+  // copyElement.style = `border-color: #f8f8f8;`;
+  copyElement.onclick = async function () {
+    const copyText = document.getElementById("text");
+
+    try {
+      await navigator.clipboard.writeText(copyText.innerText);
+    } catch (error) {
+      console.error(error.message);
+    }
+    let notify = `password ${copyText.innerText} copied to the clipboard!`;
+
+    headerElement.textContent += ` ${notify}`;
+
+    setTimeout(() => {
+      clearNotification();
+    }, 3000);
+  };
 
   divElement.appendChild(passwordElement);
   divElement.appendChild(copyElement);
@@ -843,11 +856,4 @@ function createNotification(value) {
   containerElement.appendChild(divElement);
 
   bodyElement.insertAdjacentElement("afterbegin", containerElement);
-}
-
-function clipboardText(value) {
-  let copyText = document.getElementById("text");
-  console.log(copyText);
-
-  navigator.clipboard.writeText(value);
 }
