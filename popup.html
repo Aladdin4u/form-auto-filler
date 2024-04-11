@@ -1,16 +1,25 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <style>
-      html {
-        min-height: 5em;
-        min-width: 10em;
-        background: skyblue;
-      }
-    </style>
+    <link rel="stylesheet" href="./popup.css" />
   </head>
   <body>
     <h1>Form Auto Fill</h1>
-    <p>Hello, world!</p>
+    <div>
+      <label for="fill-form" class="switch">
+        <input type="checkbox" id="fill-form" />
+        <span class="slider round"></span>
+      </label>
+    </div>
+    <template id="li_template">
+      <li>
+        <a>
+          <h3 class="title">Tab Title</h3>
+          <p class="pathname">Tab Pathname</p>
+        </a>
+      </li>
+    </template>
+
+    <script src="./popup.js" type="module"></script>
   </body>
 </html>

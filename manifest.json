@@ -11,8 +11,7 @@
   ],
   "permissions": ["activeTab", "storage"],
   "background": {
-    "service_worker": "service-worker.js",
-    "type": "module"
+    "service_worker": "service-worker.js"
   },
   "icons": {
     "16": "images/icon-16.png",
@@ -21,6 +20,7 @@
     "128": "images/icon-128.png"
   },
   "action": {
+    "default_popup": "popup.html",
     "default_icon": {
       "16": "images/icon-16.png",
       "32": "images/icon-32.png",
