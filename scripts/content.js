@@ -274,14 +274,14 @@ function fillForm() {
           const variable = generateRandomColor();
           element.value = variable;
         } else if (element.type === "number") {
-          const variable = generateRandomNumber(
+          const variable = generateRandomRange(
             element.min,
             element.max,
             element.step
           );
           element.value = variable;
         } else if (element.type === "range") {
-          const variable = generateRandomNumber(
+          const variable = generateRandomRange(
             element.min,
             element.max,
             element.step
@@ -401,7 +401,7 @@ function generateRandomVariable(data) {
   return value;
 }
 
-function generateRandomNumber(min, max, step) {
+function generateRandomRange(min, max, step) {
   const start = min ? Number(min) : 0;
   const end = max ? Number(max) : 100;
   const interval = step ? step : 1;
@@ -452,9 +452,24 @@ function generateRandomColor() {
   return color;
 }
 
-function generateRandomPhone() {
+function generateRandomNumber(length) {
+  let arrayLength = length ? length : 10
   let newNumber = "";
   const numberArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+  for (let i = 0; i < arrayLength; i++) {
+    if (newNumber.length == 3) {
+      newNumber += " ";
+    } else if (newNumber.length == 7) {
+      newNumber += " ";
+    }
+    newNumber += numberArray[randomValue(numberArray)];
+  }
+
+  return newNumber;
+}
+
+function generateRandomPhone() {
   const countryCode = [
     "213",
     "376",
@@ -672,14 +687,7 @@ function generateRandomPhone() {
     "263",
   ];
 
-  for (let i = 0; i < 10; i++) {
-    if (newNumber.length == 3) {
-      newNumber += " ";
-    } else if (newNumber.length == 7) {
-      newNumber += " ";
-    }
-    newNumber += numberArray[randomValue(numberArray)];
-  }
+  const newNumber = generateRandomNumber();
 
   const formatNumber = `+${countryCode[randomValue(countryCode)]} ${newNumber}`;
 
@@ -844,7 +852,7 @@ function createNotification(value) {
   copyElement.onclick = async function () {
     const copyText = document.getElementById("copy-text");
     const notifyText = document.getElementById("hide-notify");
-    
+
     try {
       await navigator.clipboard.writeText(copyText.innerText);
     } catch (error) {
