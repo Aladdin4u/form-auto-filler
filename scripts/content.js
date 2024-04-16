@@ -305,10 +305,9 @@ function fillForm() {
           }
           const variable = generateRandomPhone();
           element.value = variable;
-        } else if (element.type === "radio") {
-          element.checked = true;
-        } else if (element.type === "checkbox") {
-          element.checked = true;
+        } else if (element.type === "radio" || element.type === "checkbox") {
+          const isChecked = generateRandomVariable([true, false]);
+          element.checked = isChecked;
         } else if (element.type === "url") {
           const variable = generateRandomUrl();
           element.value = variable;
@@ -453,7 +452,7 @@ function generateRandomColor() {
 }
 
 function generateRandomNumber(length) {
-  let arrayLength = length ? length : 10
+  let arrayLength = length ? length : 10;
   let newNumber = "";
   const numberArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 

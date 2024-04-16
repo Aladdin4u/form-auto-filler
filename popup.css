@@ -6,6 +6,11 @@ html {
 h1 {
   font-size: medium;
 }
+.card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .switch {
   position: relative;
   display: inline-block;
