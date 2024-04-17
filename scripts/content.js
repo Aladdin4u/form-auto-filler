@@ -216,10 +216,54 @@ const countryList = [
 ];
 const addresses = ["1600 Pennsylvanna Avenue", "24 Avenue"];
 
-(() => {
+(async () => {
+  const { newRule } = await chrome.storage.local.get("newRule");
+
+  const formInput = document.querySelectorAll("input");
+  formInput.forEach((element) => {
+    newRule.forEach((el) => {
+      if (el.name === element.name) {
+        el.checked
+          ? (element.checked = el.checked)
+          : (element.value = el.value);
+      }
+    });
+  });
   chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.text == "ON") {
       fillForm();
+    } else if (request.text == "New Rule") {
+      let newRule = [];
+      const formInput = document.querySelectorAll("form, input");
+      formInput.forEach((element) => {
+        if (element.value == null || element.name == null) {
+          return;
+        }
+        if (element.type === "radio" || element.type === "checkbox") {
+          let newdata = {
+            name: element.name,
+            type: element.type,
+            checked: element.checked,
+          };
+          return newRule.push(newdata);
+        }
+
+        let newdata = {
+          name: element.name,
+          type: element.type,
+          value: element.value,
+        };
+
+        newRule.push(newdata);
+      });
+
+      let storageKey = `${request.name}-${request.tabId}`;
+      
+      chrome.storage.local.set({
+        [storageKey]: newRule,
+      });
+
+      sendResponse({key: storageKey});
     } else {
       clearForm();
     }

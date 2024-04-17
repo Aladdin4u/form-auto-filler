@@ -13,16 +13,25 @@
       </label>
     </div>
     <div>
-      <button>set rule</button>
+      <h1>Rules</h1>
+      <button id="generate-rule">Generate new rule</button>
     </div>
     <template id="li_template">
       <li>
-        <a>
-          <h3 class="title">Tab Title</h3>
-          <p class="pathname">Tab Pathname</p>
-        </a>
+        <div class="card">
+          <h3 class="title" style="word-break: break-all;">Rule Title</h3>
+          <div class="icon">
+            <span class="edit"
+              ><img src="images/pen-solid.svg" width="16" alt=""
+            /></span>
+            <span class="delete"
+              ><img src="images/trash-solid.svg" width="16" alt=""
+            /></span>
+          </div>
+        </div>
       </li>
     </template>
+    <ul></ul>
 
     <script src="./popup.js" type="module"></script>
   </body>
