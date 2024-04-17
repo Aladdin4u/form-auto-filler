@@ -44,6 +44,9 @@ checkboxInput.addEventListener("click", async () => {
 const generateRuleButton = document.getElementById("generate-rule");
 generateRuleButton.addEventListener("click", () => {
   const name = prompt("enter profile name:");
+  if (name == null) {
+    return;
+  }
   const newProfile = chrome.tabs.sendMessage(tab.id, {
     tabId: tab.id,
     text: "New Rule",
@@ -66,7 +69,9 @@ function getAllRules() {
 
 function templateElement(key) {
   const element = template.content.firstElementChild.cloneNode(true);
-  element.querySelector(".title").textContent = key;
+  let profileName = ("" + key).split(":")[0];
+  element.querySelector(".title").textContent = profileName;
+  element.querySelector(".title").id = key;
   element.querySelector(".edit").id = key;
   element.querySelector(".delete").id = key;
   return element;
@@ -74,9 +79,27 @@ function templateElement(key) {
 
 getAllRules();
 
-const title = document.querySelectorAll(".title");
+const profileRule = document.querySelectorAll(".title");
 const editRule = document.querySelectorAll(".edit");
 const deleteRule = document.querySelectorAll(".delete");
+
+profileRule.forEach((element) => {
+  element.addEventListener("click", async () => {
+    chrome.tabs.sendMessage(tab.id, {
+      text: "Select Rule",
+      key: element.id,
+    });
+  });
+});
+
+editRule.forEach((element) => {
+  element.addEventListener("click", async () => {
+    chrome.tabs.sendMessage(tab.id, {
+      text: "Edit Rule",
+      key: element.id,
+    });
+  });
+});
 
 deleteRule.forEach((element) => {
   element.addEventListener("click", async () => {

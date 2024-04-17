@@ -3,13 +3,17 @@ html {
   min-width: 10em;
   background: skyblue;
 }
-h1 {
-  font-size: medium;
-}
 h1,
 h3,
 p {
   margin: 0;
+}
+
+h1 {
+  font-size: medium;
+}
+h3 {
+  cursor: pointer;
 }
 
 ul {

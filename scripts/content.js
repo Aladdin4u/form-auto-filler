@@ -216,12 +216,76 @@ const countryList = [
 ];
 const addresses = ["1600 Pennsylvanna Avenue", "24 Avenue"];
 
-(async () => {
-  const { newRule } = await chrome.storage.local.get("newRule");
+(() => {
+  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.text == "ON") {
+      fillForm();
+    } else if (request.text == "New Rule") {
+      generateRule(request, sendResponse);
+    } else if (request.text == "Select Rule") {
+      selectRule(request);
+    } else if (request.text == "Edit Rule") {
+      EditRule(request);
+    } else {
+      clearForm();
+    }
+  });
+})();
 
+function generateRule(request, sendResponse) {
+  let newRule = [];
+  const formInput = document.querySelectorAll("form, input");
+  const formTextArea = document.querySelectorAll("form textarea");
+  if (formInput) {
+    formInput.forEach((element) => {
+      if (element.value == null || element.name == null) {
+        return;
+      }
+      if (element.type === "radio" || element.type === "checkbox") {
+        let newdata = {
+          name: element.name,
+          type: element.type,
+          checked: element.checked,
+        };
+        return newRule.push(newdata);
+      }
+
+      let newdata = {
+        name: element.name,
+        type: element.type,
+        value: element.value,
+      };
+
+      newRule.push(newdata);
+    });
+  }
+
+  if (formTextArea) {
+    formTextArea.forEach((element) => {
+      let newdata = {
+        name: element.name,
+        type: element.type,
+        value: element.value,
+      };
+
+      newRule.push(newdata);
+    });
+  }
+
+  let storageKey = `${request.name}:${request.tabId}`;
+
+  chrome.storage.local.set({
+    [storageKey]: newRule,
+  });
+
+  sendResponse({ key: storageKey });
+}
+
+async function selectRule(request) {
+  const data = await chrome.storage.local.get(request.key);
   const formInput = document.querySelectorAll("input");
   formInput.forEach((element) => {
-    newRule.forEach((el) => {
+    data[request.key].forEach((el) => {
       if (el.name === element.name) {
         el.checked
           ? (element.checked = el.checked)
@@ -229,46 +293,14 @@ const addresses = ["1600 Pennsylvanna Avenue", "24 Avenue"];
       }
     });
   });
-  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if (request.text == "ON") {
-      fillForm();
-    } else if (request.text == "New Rule") {
-      let newRule = [];
-      const formInput = document.querySelectorAll("form, input");
-      formInput.forEach((element) => {
-        if (element.value == null || element.name == null) {
-          return;
-        }
-        if (element.type === "radio" || element.type === "checkbox") {
-          let newdata = {
-            name: element.name,
-            type: element.type,
-            checked: element.checked,
-          };
-          return newRule.push(newdata);
-        }
+}
 
-        let newdata = {
-          name: element.name,
-          type: element.type,
-          value: element.value,
-        };
-
-        newRule.push(newdata);
-      });
-
-      let storageKey = `${request.name}-${request.tabId}`;
-      
-      chrome.storage.local.set({
-        [storageKey]: newRule,
-      });
-
-      sendResponse({key: storageKey});
-    } else {
-      clearForm();
-    }
+async function EditRule(request) {
+  const data = await chrome.storage.local.get(request.key);
+  data[request.key].forEach((el) => {
+    console.log(el);
   });
-})();
+}
 
 function fillForm() {
   const form = document.querySelector("form");
