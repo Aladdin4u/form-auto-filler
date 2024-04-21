@@ -1,15 +1,10 @@
-async function getCurrentTab() {
-  let queryOptions = { active: true, currentWindow: true };
-  let [tab] = await chrome.tabs.query(queryOptions);
-  return tab;
-}
+import { getCurrentTab } from "./utils.js";
 
 const ulElement = document.querySelector("ul");
 const template = document.getElementById("li_template");
 
 const tab = await getCurrentTab();
 const getLocalStorage = await chrome.storage.local.get();
-
 // Retrieve the action badge to check if the extension is 'ON' or 'OFF'
 const prevState = await chrome.action.getBadgeText({ tabId: tab.id });
 
@@ -94,11 +89,15 @@ profileRule.forEach((element) => {
 
 editRule.forEach((element) => {
   element.addEventListener("click", async () => {
-    chrome.tabs.sendMessage(tab.id, {
-      text: "Edit Rule",
-      key: element.id,
-      tabId: tab.id,
-    });
+    chrome.tabs
+      .sendMessage(tab.id, {
+        text: "Edit Rule",
+      })
+      .then((data) => {
+        // redirect to option.html to edit profile
+        const newUrl = `chrome-extension://${data.url}/option.html?key=${element.id}`;
+        chrome.tabs.create({ url: newUrl });
+      });
   });
 });
 

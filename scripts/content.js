@@ -225,7 +225,7 @@ const addresses = ["1600 Pennsylvanna Avenue", "24 Avenue"];
     } else if (request.text == "Select Rule") {
       selectRule(request);
     } else if (request.text == "Edit Rule") {
-      EditRule(request);
+      sendResponse({ url: sender.id });
     } else {
       clearForm();
     }
@@ -241,19 +241,13 @@ function generateRule(request, sendResponse) {
       if (element.value == null || element.name == null) {
         return;
       }
-      if (element.type === "radio" || element.type === "checkbox") {
-        let newdata = {
-          name: element.name,
-          type: element.type,
-          checked: element.checked,
-        };
-        return newRule.push(newdata);
-      }
-
+      
       let newdata = {
         name: element.name,
         type: element.type,
         value: element.value,
+        src: element.src,
+        checked: element.checked,
       };
 
       newRule.push(newdata);
@@ -292,13 +286,6 @@ async function selectRule(request) {
           : (element.value = el.value);
       }
     });
-  });
-}
-
-async function EditRule(request) {
-  const data = await chrome.storage.local.get(request.key);
-  data[request.key].forEach((el) => {
-    console.log(el);
   });
 }
 

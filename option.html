@@ -4,6 +4,35 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Form Auto Fill - Edit</title>
+    <style>
+      table {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      table td,
+      table th {
+        border: 1px solid #ddd;
+        padding: 8px;
+      }
+
+      table tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      table tr:hover {
+        background-color: #ddd;
+      }
+
+      table th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #04aa6d;
+        color: white;
+      }
+    </style>
   </head>
   <body>
     <table>
@@ -14,13 +43,15 @@
           <th>value</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td>text</td>
-          <td>username</td>
-          <td>john</td>
-        </tr>
-      </tbody>
+      <tbody id="tbody"></tbody>
     </table>
+    <template id="table_template">
+      <tr>
+        <td class="type"></td>
+        <td><input type="text" id="name" /></td>
+        <td><input type="text" id="value" /></td>
+      </tr>
+    </template>
+    <script src="./option.js" type="module"></script>
   </body>
 </html>
