@@ -97,6 +97,7 @@ editRule.forEach((element) => {
     chrome.tabs.sendMessage(tab.id, {
       text: "Edit Rule",
       key: element.id,
+      tabId: tab.id,
     });
   });
 });

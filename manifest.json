@@ -9,7 +9,7 @@
       "matches": ["http://localhost/*", "http://*:*/*", "file:///"]
     }
   ],
-  "permissions": ["activeTab", "storage"],
+  "permissions": ["activeTab", "scripting", "storage"],
   "background": {
     "service_worker": "service-worker.js"
   },
