@@ -238,10 +238,10 @@ function generateRule(request, sendResponse) {
   const formTextArea = document.querySelectorAll("form textarea");
   if (formInput) {
     formInput.forEach((element) => {
-      if (element.value == null || element.name == null) {
+      if (element.type === "submit" || element.type === "file") {
         return;
       }
-      
+
       let newdata = {
         name: element.name,
         type: element.type,

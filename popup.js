@@ -1,10 +1,12 @@
 import { getCurrentTab } from "./utils.js";
 
+let profileRule, editRule, deleteRule;
 const ulElement = document.querySelector("ul");
 const template = document.getElementById("li_template");
 
 const tab = await getCurrentTab();
-const getLocalStorage = await chrome.storage.local.get();
+const storeData = await chrome.storage.local.get();
+
 // Retrieve the action badge to check if the extension is 'ON' or 'OFF'
 const prevState = await chrome.action.getBadgeText({ tabId: tab.id });
 
@@ -42,25 +44,22 @@ generateRuleButton.addEventListener("click", () => {
   if (name == null) {
     return;
   }
-  const newProfile = chrome.tabs.sendMessage(tab.id, {
-    tabId: tab.id,
-    text: "New Rule",
-    name: name,
-  });
-  newProfile.then((data) => {
-    const element = templateElement(data.key);
-    ulElement.appendChild(element);
-  });
+
+  chrome.tabs
+    .sendMessage(tab.id, {
+      tabId: tab.id,
+      text: "New Rule",
+      name: name,
+    })
+    .then((data) => {
+      const element = templateElement(data.key);
+      ulElement.appendChild(element);
+      refetch();
+    });
 });
 
-function getAllRules() {
-  const elements = new Set();
-  for (const key in getLocalStorage) {
-    const element = templateElement(key);
-    elements.add(element);
-  }
-  ulElement.append(...elements);
-}
+getAllRules();
+refetch();
 
 function templateElement(key) {
   const element = template.content.firstElementChild.cloneNode(true);
@@ -72,39 +71,48 @@ function templateElement(key) {
   return element;
 }
 
-getAllRules();
+function getAllRules() {
+  const elements = new Set();
+  for (const key in storeData) {
+    const element = templateElement(key);
+    elements.add(element);
+  }
+  ulElement.append(...elements);
+}
 
-const profileRule = document.querySelectorAll(".title");
-const editRule = document.querySelectorAll(".edit");
-const deleteRule = document.querySelectorAll(".delete");
+function refetch() {
+  profileRule = document.querySelectorAll(".title");
+  editRule = document.querySelectorAll(".edit");
+  deleteRule = document.querySelectorAll(".delete");
 
-profileRule.forEach((element) => {
-  element.addEventListener("click", async () => {
-    chrome.tabs.sendMessage(tab.id, {
-      text: "Select Rule",
-      key: element.id,
+  profileRule.forEach((element) => {
+    element.addEventListener("click", async () => {
+      chrome.tabs.sendMessage(tab.id, {
+        text: "Select Rule",
+        key: element.id,
+      });
     });
   });
-});
 
-editRule.forEach((element) => {
-  element.addEventListener("click", async () => {
-    chrome.tabs
-      .sendMessage(tab.id, {
-        text: "Edit Rule",
-      })
-      .then((data) => {
-        // redirect to option.html to edit profile
-        const newUrl = `chrome-extension://${data.url}/option.html?key=${element.id}`;
-        chrome.tabs.create({ url: newUrl });
-      });
+  editRule.forEach((element) => {
+    element.addEventListener("click", async () => {
+      chrome.tabs
+        .sendMessage(tab.id, {
+          text: "Edit Rule",
+        })
+        .then((data) => {
+          // redirect to option.html to edit profile
+          const newUrl = `chrome-extension://${data.url}/option.html?key=${element.id}`;
+          chrome.tabs.create({ url: newUrl });
+        });
+    });
   });
-});
 
-deleteRule.forEach((element) => {
-  element.addEventListener("click", async () => {
-    const parentElement = element.closest("li");
-    await chrome.storage.local.remove(element.id);
-    ulElement.removeChild(parentElement);
+  deleteRule.forEach((element) => {
+    element.addEventListener("click", async () => {
+      const parentElement = element.closest("li");
+      await chrome.storage.local.remove(element.id);
+      ulElement.removeChild(parentElement);
+    });
   });
-});
+}
