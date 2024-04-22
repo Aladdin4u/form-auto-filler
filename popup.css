@@ -3,7 +3,6 @@ html {
   min-width: 10em;
   background: skyblue;
 }
-h1,
 h3,
 p {
   margin: 0;
@@ -26,7 +25,14 @@ li {
   padding: 0.25rem;
   border-bottom: 1px solid gray;
 }
-
+.btn {
+  padding: 4px;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+}
 .card {
   display: flex;
   justify-content: space-between;

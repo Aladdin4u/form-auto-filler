@@ -4,12 +4,9 @@ const key = params.get("key");
 let storeData = [];
 const tbody = document.getElementById("tbody");
 const template = document.getElementById("table_template");
+const saveProfile = document.querySelector("button, .save");
 const addNewField = document.querySelector("button, .add");
 const closeTab = document.querySelector("button, .cancel");
-const saveProfile = document.querySelector("button, .save");
-const inputName = document.querySelectorAll(".input-name");
-const inputValue = document.querySelectorAll(".input-value");
-const deleteInputField = document.querySelectorAll(".delete");
 
 const datas = await chrome.storage.local.get(key);
 storeData = datas[key];
@@ -42,6 +39,10 @@ function fetchAllData() {
 
 fetchAllData();
 
+const inputName = document.querySelectorAll(".input-name");
+const inputValue = document.querySelectorAll(".input-value");
+const deleteInputField = document.querySelectorAll(".delete");
+
 if (inputName) {
   inputName.forEach((element) => {
     element.addEventListener("click", () => {
@@ -61,8 +62,19 @@ if (inputValue) {
       const parent = element.closest("tr");
       element.addEventListener("input", (e) => {
         let currValue = storeData.find((data, index) => index + 1 == parent.id);
-        currValue.value = e.target.value;
+        if (element.type === "checkbox" || element.type === "radio") {
+          currValue.checked = e.target.checked;
+        } else {
+          currValue.value = e.target.value;
+        }
       });
+
+      if (element.type === "image") {
+        let imageSrc = prompt("Edit image url: ", element.src);
+        let currValue = storeData.find((data, index) => index + 1 == parent.id);
+        currValue.src = imageSrc;
+        storeData[parent.id - 1] = currValue;
+      }
     });
   });
 }
