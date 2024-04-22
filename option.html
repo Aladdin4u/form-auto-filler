@@ -32,6 +32,23 @@
         background-color: #04aa6d;
         color: white;
       }
+      button {
+        padding: 8px 14px;
+        border: none;
+        border-radius: 4px;
+        font-weight: 600;
+      }
+      .btn {
+        padding: 15px 0;
+      }
+      .save {
+        background-color: #04aa6d;
+        color: white;
+      }
+      .cancel {
+        background-color: red;
+        color: white;
+      }
     </style>
   </head>
   <body>
@@ -45,11 +62,19 @@
       </thead>
       <tbody id="tbody"></tbody>
     </table>
+    <div class="btn">
+      <button class="save">Save</button>
+      <button class="add">Add New Field</button>
+      <button class="cancel">Cancel</button>
+    </div>
     <template id="table_template">
       <tr>
-        <td class="type"></td>
-        <td><input type="text" id="name" /></td>
-        <td><input type="text" id="value" /></td>
+        <td class="input-type"></td>
+        <td><input type="text" class="input-name" /></td>
+        <td><input class="input-value" /></td>
+        <td class="delete">
+          <img src="images/trash-solid.svg" width="16" alt="" />
+        </td>
       </tr>
     </template>
     <script src="./option.js" type="module"></script>
