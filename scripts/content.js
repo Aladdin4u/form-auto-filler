@@ -234,7 +234,7 @@ const addresses = ["1600 Pennsylvanna Avenue", "24 Avenue"];
 
 function generateRule(request, sendResponse) {
   let newRule = [];
-  const formInput = document.querySelectorAll("form, input");
+  const formInput = document.querySelectorAll("form input");
   const formTextArea = document.querySelectorAll("form textarea");
   if (formInput) {
     formInput.forEach((element) => {

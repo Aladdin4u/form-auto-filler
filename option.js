@@ -2,11 +2,13 @@ const params = new URLSearchParams(document.location.search);
 const key = params.get("key");
 
 let storeData = [];
+const body = document.querySelector("body");
 const tbody = document.getElementById("tbody");
 const template = document.getElementById("table_template");
-const saveProfile = document.querySelector("button, .save");
-const addNewField = document.querySelector("button, .add");
-const closeTab = document.querySelector("button, .cancel");
+const fieldTemplate = document.getElementById("field_template");
+const saveProfile = document.querySelector("button.save");
+const addNewField = document.querySelector("button.add");
+const closeTab = document.querySelector("button.cancel");
 
 const datas = await chrome.storage.local.get(key);
 storeData = datas[key];
@@ -48,7 +50,6 @@ if (inputName) {
     element.addEventListener("click", () => {
       const parent = element.closest("tr");
       element.addEventListener("input", (e) => {
-        console.log(e.target.value);
         let currValue = storeData.find((data, index) => index + 1 == parent.id);
         currValue.name = e.target.value;
       });
@@ -93,5 +94,18 @@ if (saveProfile) {
   saveProfile.addEventListener("click", async () => {
     await chrome.storage.local.set({ [key]: storeData });
     alert("Profile successfully saved!");
+  });
+}
+
+if (closeTab) {
+  closeTab.addEventListener("click", async () => {
+    window.close();
+  });
+}
+
+if (addNewField) {
+  addNewField.addEventListener("click", () => {
+    const element = fieldTemplate.content.firstElementChild.cloneNode(true);
+    body.appendChild(element);
   });
 }
