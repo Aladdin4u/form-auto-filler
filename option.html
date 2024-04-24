@@ -32,6 +32,16 @@
         background-color: #04aa6d;
         color: white;
       }
+      input,
+      select {
+        display: inline-block;
+        padding: 8px 14px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      input[type="color"] {
+        padding: 0;
+      }
       button {
         padding: 8px 14px;
         border: none;
@@ -45,13 +55,22 @@
         background-color: #04aa6d;
         color: white;
       }
+      .save:hover {
+        background-color: #03784d;
+      }
       .cancel {
         background-color: red;
         color: white;
       }
+      .cancel:hover {
+        background-color: rgb(209, 0, 0);
+      }
+      .add:hover {
+        background-color: #ddd;
+      }
       .modal {
         z-index: 3;
-        display: block;
+        display: none;
         padding-top: 100px;
         position: fixed;
         left: 0;
@@ -62,7 +81,6 @@
         background-color: rgb(0, 0, 0);
         background-color: rgba(0, 0, 0, 0.4);
       }
-
       .modal-content {
         margin: auto;
         background-color: #fff;
@@ -71,12 +89,33 @@
         outline: 0;
         width: 600px;
       }
+      .show {
+        display: block;
+      }
       .container {
         display: flex;
         flex-direction: column;
         justify-content: center;
         padding: 15px;
         gap: 10px;
+      }
+      .btn-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .exit {
+        position: absolute;
+        top: 0;
+        right: 15px;
+        font-size: xx-large;
+        cursor: pointer;
+      }
+      .error {
+        background-color: ivory;
+        border: none;
+        outline: 2px solid red;
+        border-radius: 4px;
       }
     </style>
   </head>
@@ -92,9 +131,9 @@
       <tbody id="tbody"></tbody>
     </table>
     <div class="btn">
-      <button class="save">Save</button>
+      <button id="save" class="save">Save</button>
       <button class="add">Add New Field</button>
-      <button class="cancel">Cancel</button>
+      <button id="cancel" class="cancel">Cancel</button>
     </div>
     <template id="table_template">
       <tr>
@@ -106,32 +145,42 @@
         </td>
       </tr>
     </template>
-    <template id="field_template">
-      <div class="modal">
-        <div class="modal-content">
-          <div class="container">
-            <label for="input-type">Input Type</label>
-            <select name="input-type" id="input-type">
-              <option value="">-- Choose input type --</option>
-              <option value="text">Text</option>
-              <option value="date">Date</option>
-              <option value="number">Number</option>
-              <option value="range">Range</option>
-              <option value="checkbox">Checkbox</option>
-              <option value="radio">Radio</option>
-            </select>
-            <label for="input-name">Input Name</label>
-            <input type="text" name="input-name" id="input-name" />
-            <label for="input-value">Input Value</label>
-            <input type="text" name="input-value" id="input-value" />
-            <div>
-              <button>save</button>
-              <button>cancel</button>
-            </div>
+    <div class="modal" id="fieldModal">
+      <div class="modal-content">
+        <span class="exit close">×</span>
+        <div class="container">
+          <label for="add-type">Input Type</label>
+          <select name="add-type" id="add-type">
+            <option value="">-- Choose input type --</option>
+            <option value="text">Text</option>
+            <option value="number">Number</option>
+            <option value="email">Email</option>
+            <option value="color">Color</option>
+            <option value="date">Date</option>
+            <option value="datetime-local">Datetime-local</option>
+            <option value="checkbox">Checkbox</option>
+            <option value="password">Password</option>
+            <option value="radio">Radio</option>
+            <option value="range">Range</option>
+            <option value="image">Image</option>
+            <option value="month">Month</option>
+            <option value="search">Search</option>
+            <option value="tel">Tel</option>
+            <option value="time">Time</option>
+            <option value="url">Url</option>
+            <option value="week">Week</option>
+          </select>
+          <label for="add-name">Input Name</label>
+          <input type="text" name="add-name" id="add-name" />
+          <label for="add-value">Input Value</label>
+          <input type="text" name="add-value" id="add-value" />
+          <div class="btn-container">
+            <button class="cancel close">Cancel</button>
+            <button id="save-field" class="save">Save</button>
           </div>
         </div>
       </div>
-    </template>
+    </div>
     <script src="./option.js" type="module"></script>
   </body>
 </html>
