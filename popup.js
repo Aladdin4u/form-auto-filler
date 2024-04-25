@@ -1,4 +1,4 @@
-import { getCurrentTab } from "./utils.js";
+import { getCurrentTab } from "./utils/index.js";
 
 let profileRule, editRule, deleteRule;
 const ulElement = document.querySelector("ul");
