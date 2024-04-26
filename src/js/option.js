@@ -107,6 +107,7 @@ function refetchInputElement() {
     inputName.forEach((element) => {
       element.addEventListener("click", () => {
         const parent = element.closest("tr");
+        element.closest
         element.addEventListener("input", (e) => {
           let currValue = storeData.find(
             (data, index) => index + 1 == parent.id

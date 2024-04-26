@@ -1,4 +1,4 @@
-import { getCurrentTab } from "./utils/index.js";
+import { getCurrentTab } from "../utils/index.js";
 
 let profileRule, editRule, deleteRule;
 const ulElement = document.querySelector("ul");
@@ -102,7 +102,7 @@ function refetch() {
         })
         .then((data) => {
           // redirect to option.html to edit profile
-          const newUrl = `chrome-extension://${data.url}/option.html?key=${element.id}`;
+          const newUrl = `chrome-extension://${data.url}/src/option.html?key=${element.id}`;
           chrome.tabs.create({ url: newUrl });
         });
     });

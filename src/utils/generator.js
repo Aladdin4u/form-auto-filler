@@ -1,4 +1,14 @@
-import { countryCode, haxArray, url } from "./data.js";
+import {
+  url,
+  names,
+  cities,
+  states,
+  streets,
+  haxArray,
+  countryCode,
+  countryList,
+  loremTextArray,
+} from "./data.js";
 
 function randomValue(value) {
   return Math.floor(Math.random() * value.length);
@@ -9,6 +19,58 @@ export function generateRandomVariable(data) {
   const value = data[random];
   return value;
 }
+
+export function generateFormText(name) {
+  name = name.toLowerCase();
+
+  // Define regex patterns for each character class
+  const patterns = {
+    name: names,
+    city: cities,
+    state: states,
+    street: streets,
+    country: countryList,
+    address: generateRandomAddress(),
+    // Add more patterns as needed
+  };
+
+  // Check if the name exists in the patterns
+  if (patterns.hasOwnProperty(name)) {
+    if (name === "address") {
+      return patterns[name];
+    }
+    const values = patterns[name];
+    // Randomly select a value from the pattern
+    return values[Math.floor(Math.random() * values.length)];
+  } else {
+    // Default value if name doesn't match any pattern
+    return "Unknown";
+  }
+}
+
+function generateRandomAddress() {
+  // List of possible street names, cities, and states
+  const street = streets;
+  const city = cities;
+  const state = states;
+
+  // Randomly select street, city, and state
+  const randomStreet = streets[randomValue(streets)];
+  const randomCity = cities[randomValue(cities)];
+  const randomState = states[randomValue(states)];
+
+  // Generate a random house number (between 1 and 1000)
+  const randomNumber = Math.floor(Math.random() * 1000) + 1;
+
+  // Construct the address string
+  const address =
+    randomNumber + " " + randomStreet + ", " + randomCity + ", " + randomState;
+
+  return address;
+}
+
+// Example usage
+console.log(generateRandomAddress());
 
 export function generateRandomRange(min, max, step) {
   const start = min ? Number(min) : 0;
@@ -74,77 +136,7 @@ export function generateLoremText() {
   const paragraphLength = paragraphs[randomValue(paragraphs)];
   const wordLength = words[randomValue(words)];
   var loremText = "";
-  var wordArray = [
-    "Lorem",
-    "ipsum",
-    "dolor",
-    "sit",
-    "amet",
-    "consectetur",
-    "adipiscing",
-    "elit",
-    "sed",
-    "do",
-    "eiusmod",
-    "tempor",
-    "incididunt",
-    "ut",
-    "labore",
-    "et",
-    "dolore",
-    "magna",
-    "aliqua",
-    "Ut",
-    "enim",
-    "ad",
-    "minim",
-    "veniam",
-    "quis",
-    "nostrud",
-    "exercitation",
-    "ullamco",
-    "laboris",
-    "nisi",
-    "ut",
-    "aliquip",
-    "ex",
-    "ea",
-    "commodo",
-    "consequat",
-    "Duis",
-    "aute",
-    "irure",
-    "dolor",
-    "in",
-    "reprehenderit",
-    "in",
-    "voluptate",
-    "velit",
-    "esse",
-    "cillum",
-    "dolore",
-    "eu",
-    "fugiat",
-    "nulla",
-    "pariatur",
-    "Excepteur",
-    "sint",
-    "occaecat",
-    "cupidatat",
-    "non",
-    "proident",
-    "sunt",
-    "in",
-    "culpa",
-    "qui",
-    "officia",
-    "deserunt",
-    "mollit",
-    "anim",
-    "id",
-    "est",
-    "laborum",
-  ];
+  var wordArray = loremTextArray;
 
   for (let i = 0; i < paragraphLength; i++) {
     var paragraph = "";

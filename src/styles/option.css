@@ -1,0 +1,112 @@
+table {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      table td,
+      table th {
+        border: 1px solid #ddd;
+        padding: 8px;
+      }
+
+      table tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      table tr:hover {
+        background-color: #ddd;
+      }
+
+      table th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #04aa6d;
+        color: white;
+      }
+      input,
+      select {
+        display: inline-block;
+        padding: 8px 14px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      input[type="color"] {
+        padding: 0;
+      }
+      button {
+        padding: 8px 14px;
+        border: none;
+        border-radius: 4px;
+        font-weight: 600;
+      }
+      .btn {
+        padding: 15px 0;
+      }
+      .save {
+        background-color: #04aa6d;
+        color: white;
+      }
+      .save:hover {
+        background-color: #03784d;
+      }
+      .cancel {
+        background-color: red;
+        color: white;
+      }
+      .cancel:hover {
+        background-color: rgb(209, 0, 0);
+      }
+      .add:hover {
+        background-color: #ddd;
+      }
+      .modal {
+        z-index: 3;
+        display: none;
+        padding-top: 100px;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0, 0, 0);
+        background-color: rgba(0, 0, 0, 0.4);
+      }
+      .modal-content {
+        margin: auto;
+        background-color: #fff;
+        position: relative;
+        padding: 0;
+        outline: 0;
+        width: 600px;
+      }
+      .show {
+        display: block;
+      }
+      .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 15px;
+        gap: 10px;
+      }
+      .btn-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .exit {
+        position: absolute;
+        top: 0;
+        right: 15px;
+        font-size: xx-large;
+        cursor: pointer;
+      }
+      .error {
+        background-color: ivory;
+        border: none;
+        outline: 2px solid red;
+        border-radius: 4px;
+      }

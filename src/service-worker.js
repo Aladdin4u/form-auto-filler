@@ -1,12 +1,8 @@
 import {
-  names,
-  cities,
   emails,
-  states,
-  addresses,
-  countryList,
 } from "./utils/data.js";
 import {
+  generateFormText,
   generateRandomUrl,
   generateLoremText,
   generateRandomDate,
@@ -33,14 +29,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     let response, variable;
     switch (request.inputType) {
       case "text":
-        response = generateFormText(
-          request.name,
-          names,
-          cities,
-          addresses,
-          states,
-          countryList
-        );
+        response = generateFormText(request.name);
         break;
       case "email":
         response = generateRandomVariable(emails);
@@ -101,34 +90,3 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     sendResponse({ status: "success", data: response });
   }
 });
-
-function generateFormText(type, names, cities, addresses, states, countryList) {
-  let variable;
-  const formName = type.toLowerCase();
-  const cityPattern = /cit\w*/g;
-  const statePattern = /state\w*/g;
-  const countryPattern = /countr\w*/g;
-  const addressPattern = /address\w*/g;
-  const namePattern = /\w*(-|\s)?name\w*/g;
-  const name = namePattern.test(formName);
-  const city = cityPattern.test(formName);
-  const state = statePattern.test(formName);
-  const country = countryPattern.test(formName);
-  const address = addressPattern.test(formName);
-
-  if (name) {
-    variable = generateRandomVariable(names);
-  } else if (city) {
-    variable = generateRandomVariable(cities);
-  } else if (address) {
-    variable = generateRandomVariable(addresses);
-  } else if (state) {
-    variable = generateRandomVariable(states);
-  } else if (country) {
-    variable = generateRandomVariable(countryList);
-  } else {
-    return;
-  }
-
-  return variable;
-}
