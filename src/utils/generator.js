@@ -176,3 +176,74 @@ export function generateRandomPassword() {
 
   return password;
 }
+
+export function generatePhoneNumberPattern(pattern) {
+  // Define regex patterns for each character class
+  const patterns = {
+    d: "0123456789",
+    w: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_",
+    s: " !@#$%^&*()[]{}-=_+;:,.<>?/\\|",
+  };
+
+  let variable = "";
+  let repeatCount = 1; // Default repeat count
+
+  for (let i = 0; i < pattern.length; i++) {
+    const char = pattern[i];
+    if (char === "{") {
+      // If curly brace is encountered, extract the repeat count
+      const endIndex = pattern.indexOf("}", i);
+      const range = pattern.substring(i + 1, endIndex);
+      const parts = range.split(",");
+      const min = parseInt(parts[0]);
+      const max = parseInt(parts[1]);
+      repeatCount = Math.floor(Math.random() * (max - min + 1)) + min;
+      i = endIndex; // Move the index to the end of the curly brace notation
+    } else if (char === "\\") {
+      continue
+    } else if (char === "[") {
+      // If bracket is encountered, extract the repeat count
+      const endIndex = pattern.indexOf("]", i);
+      const range = pattern.substring(i + 1, endIndex);
+      console.log("range", range);
+      const parts = range.split("-");
+      const min = parseInt(parts[0]);
+      const max = parseInt(parts[1]);
+
+      const openBraceIndex = endIndex + 1;
+      const closeBraceIndex = pattern.indexOf("}", openBraceIndex);
+      const curlyBraceCount = pattern.substring(openBraceIndex + 1, closeBraceIndex);
+      
+      if(pattern[openBraceIndex] ===  "{") {
+        const chars = patterns["d"];
+        variable += loopPatterns(chars, curlyBraceCount)
+      }
+      i = closeBraceIndex; // Move the index to the end of the curly brace notation
+    } else if (patterns[char]) {
+      // If character class is defined, randomly select characters from it
+      const endIndex = pattern.indexOf("}", i);
+      const range = pattern.substring(i + 2, endIndex);
+      if(pattern[i + 1] ===  "{") {
+        const chars = patterns[char];
+        variable += loopPatterns(chars, range);
+      }
+      repeatCount = 1; // Reset repeat count after processing
+    } else {
+      // Otherwise, use the character as is
+      variable += char;
+      repeatCount = 1; // Reset repeat count after processing
+    }
+  }
+  return variable;
+}
+
+function loopPatterns (chars, repeatCount) {
+  let result = ""
+  for (let j = 0; j < repeatCount; j++) {
+        const randomChar = chars.charAt(
+          Math.floor(Math.random() * chars.length)
+        );
+        result += randomChar;
+  }
+  return result;
+}
