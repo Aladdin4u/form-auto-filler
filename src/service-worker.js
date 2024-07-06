@@ -60,7 +60,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         response = variable.slice(0, 7);
         break;
       case "tel":
-        variable = generateRandomPhone();
+        variable = generateRandomPhone(request.pattern);
         response = variable;
         break;
       case "checkbox":

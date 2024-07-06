@@ -91,6 +91,7 @@ async function fillForm() {
           height: element.height,
           name: element.name,
           src: element.src,
+          pattern: element.pattern,
         });
         const data = response?.data;
         if (element.type === "radio" || element.type === "checkbox") {
