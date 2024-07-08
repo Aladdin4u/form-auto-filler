@@ -6,7 +6,12 @@
   "content_scripts": [
     {
       "js": ["./src/scripts/content.js"],
-      "matches": ["http://localhost/*", "http://127.0.0.1:*/*", "file:///"]
+      "matches": [
+        "http://localhost/*",
+        "http://127.0.0.1:*/*",
+        "file:///",
+        "file:///*/*.html"
+      ]
     }
   ],
   "permissions": ["activeTab", "scripting", "storage"],

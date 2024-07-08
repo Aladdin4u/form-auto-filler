@@ -69,9 +69,6 @@ function generateRandomAddress() {
   return address;
 }
 
-// Example usage
-console.log(generateRandomAddress());
-
 export function generateRandomRange(min, max, step) {
   const start = min ? Number(min) : 0;
   const end = max ? Number(max) : 100;
