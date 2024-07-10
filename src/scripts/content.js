@@ -2,6 +2,13 @@
   chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.text == "ON") {
       fillForm();
+    }  else if (request.text == "CHECKFORM") {
+      const form = document.querySelector("form");
+      if(form == null) {
+        sendResponse({ form: false })
+      } else {
+        sendResponse({ form: true })
+      }
     } else if (request.text == "New Rule") {
       generateRule(request, sendResponse);
     } else if (request.text == "Select Rule") {

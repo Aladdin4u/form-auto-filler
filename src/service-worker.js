@@ -1,6 +1,4 @@
-import {
-  emails,
-} from "./utils/data.js";
+import { emails } from "./utils/data.js";
 import {
   generateFormText,
   generateRandomUrl,
@@ -19,10 +17,6 @@ chrome.runtime.onInstalled.addListener(() => {
     text: "OFF",
   });
 });
-
-const localhost = "http://localhost/*";
-const local = "http://*:*/*";
-const file = "file:///";
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.type == "Autofill") {

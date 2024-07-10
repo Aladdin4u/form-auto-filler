@@ -4,40 +4,6 @@ let profileRule, editRule, deleteRule;
 const ulElement = document.querySelector("ul");
 const template = document.getElementById("li_template");
 
-const tab = await getCurrentTab();
-const storeData = await chrome.storage.local.get();
-
-// Retrieve the action badge to check if the extension is 'ON' or 'OFF'
-const prevState = await chrome.action.getBadgeText({ tabId: tab.id });
-
-const isChecked = prevState === "ON" ? true : false;
-
-const checkboxInput = document.querySelector("input, checkbox");
-checkboxInput.checked = isChecked;
-
-checkboxInput.addEventListener("click", async () => {
-  const tab = await getCurrentTab();
-  // Retrieve the action badge to check if the extension is 'ON' or 'OFF'
-  const prevState = await chrome.action.getBadgeText({ tabId: tab.id });
-  // Next state will always be the opposite
-  const nextState = prevState === "ON" ? "OFF" : "ON";
-  // Set the action badge to the next state
-  await chrome.action.setBadgeText({
-    tabId: tab.id,
-    text: nextState,
-  });
-
-  chrome.tabs.sendMessage(tab.id, {
-    text: nextState,
-  });
-
-  if (checkboxInput.checked) {
-    checkboxInput.checked = true;
-  } else {
-    checkboxInput.checked = false;
-  }
-});
-
 const generateRuleButton = document.getElementById("generate-rule");
 generateRuleButton.addEventListener("click", () => {
   const name = prompt("enter profile name:");
@@ -58,9 +24,6 @@ generateRuleButton.addEventListener("click", () => {
     });
 });
 
-getAllRules();
-refetch();
-
 function templateElement(key) {
   const element = template.content.firstElementChild.cloneNode(true);
   let profileName = ("" + key).split(":")[0];
@@ -71,7 +34,7 @@ function templateElement(key) {
   return element;
 }
 
-function getAllRules() {
+function getAllRules(storeData) {
   const elements = new Set();
   for (const key in storeData) {
     const element = templateElement(key);
@@ -116,3 +79,51 @@ function refetch() {
     });
   });
 }
+
+document.addEventListener("DOMContentLoaded", async () => {
+  const tab = await getCurrentTab();
+
+  const checkForm = await chrome.tabs.sendMessage(tab.id, {
+    text: "CHECKFORM",
+  });
+
+  if (checkForm.form) {
+    const storeData = await chrome.storage.local.get();
+    const prevState = await chrome.action.getBadgeText({ tabId: tab.id });
+
+    const isChecked = prevState === "ON" ? true : false;
+
+    const checkboxInput = document.querySelector("input, checkbox");
+    checkboxInput.checked = isChecked;
+
+    checkboxInput.addEventListener("click", async () => {
+      const tab = await getCurrentTab();
+      // Retrieve the action badge to check if the extension is 'ON' or 'OFF'
+      const prevState = await chrome.action.getBadgeText({ tabId: tab.id });
+      // Next state will always be the opposite
+      const nextState = prevState === "ON" ? "OFF" : "ON";
+      // Set the action badge to the next state
+      await chrome.action.setBadgeText({
+        tabId: tab.id,
+        text: nextState,
+      });
+
+      chrome.tabs.sendMessage(tab.id, {
+        text: nextState,
+      });
+
+      if (checkboxInput.checked) {
+        checkboxInput.checked = true;
+      } else {
+        checkboxInput.checked = false;
+      }
+    });
+
+    getAllRules(storeData);
+    refetch();
+  } else {
+    const container = document.getElementsByClassName("container")[0];
+    container.innerHTML =
+      '<div class="title">This is page does not contain form element.</div>';
+  }
+});

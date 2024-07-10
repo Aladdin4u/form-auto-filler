@@ -4,34 +4,36 @@
     <link rel="stylesheet" href="./styles/popup.css" />
   </head>
   <body>
+    <div class="container">
     <h1>Form Auto Fill</h1>
-    <div class="card">
-      <span>Turn on/off autofill</span>
-      <label for="fill-form" class="switch">
-        <input type="checkbox" id="fill-form" />
-        <span class="slider round"></span>
-      </label>
-    </div>
-    <div>
-      <h1>Rules</h1>
-      <button id="generate-rule" class="btn">Generate new rule</button>
-    </div>
-    <template id="li_template">
-      <li>
-        <div class="card">
-          <h3 class="title" style="word-break: break-all">Rule Title</h3>
-          <div class="icon">
-            <span class="edit"
-              ><img src="../images/pen-solid.svg" width="16" alt=""
-            /></span>
-            <span class="delete"
-              ><img src="../images/trash-solid.svg" width="16" alt=""
-            /></span>
+      <div class="card">
+        <span>Turn on/off autofill</span>
+        <label for="fill-form" class="switch">
+          <input type="checkbox" id="fill-form" />
+          <span class="slider round"></span>
+        </label>
+      </div>
+      <div>
+        <h1>Rules</h1>
+        <button id="generate-rule" class="btn">Generate new rule</button>
+      </div>
+      <template id="li_template">
+        <li>
+          <div class="card">
+            <h3 class="title" style="word-break: break-all">Rule Title</h3>
+            <div class="icon">
+              <span class="edit"
+                ><img src="../images/pen-solid.svg" width="16" alt=""
+              /></span>
+              <span class="delete"
+                ><img src="../images/trash-solid.svg" width="16" alt=""
+              /></span>
+            </div>
           </div>
-        </div>
-      </li>
-    </template>
-    <ul></ul>
+        </li>
+      </template>
+      <ul></ul>
+    </div>
 
     <script src="./js/popup.js" type="module"></script>
   </body>
