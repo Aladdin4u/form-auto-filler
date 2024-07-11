@@ -19,7 +19,7 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.type == "Autofill") {
+  if (request.type == "AUTOFILL") {
     let response, variable;
     switch (request.inputType) {
       case "text":

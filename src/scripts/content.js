@@ -2,18 +2,18 @@
   chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.text == "ON") {
       fillForm();
-    }  else if (request.text == "CHECKFORM") {
+    } else if (request.text == "CHECKFORM") {
       const form = document.querySelector("form");
-      if(form == null) {
-        sendResponse({ form: false })
+      if (form == null) {
+        sendResponse({ form: false });
       } else {
-        sendResponse({ form: true })
+        sendResponse({ form: true });
       }
-    } else if (request.text == "New Rule") {
-      generateRule(request, sendResponse);
-    } else if (request.text == "Select Rule") {
-      selectRule(request);
-    } else if (request.text == "Edit Rule") {
+    } else if (request.text == "NEWFORM") {
+      generateForm(request, sendResponse);
+    } else if (request.text == "SELECTFORM") {
+      selectForm(request);
+    } else if (request.text == "EDITFORM") {
       sendResponse({ url: sender.id });
     } else {
       clearForm();
@@ -21,12 +21,11 @@
   });
 })();
 
-function generateRule(request, sendResponse) {
-  let newRule = [];
-  const formInput = document.querySelectorAll("form input");
-  const formTextArea = document.querySelectorAll("form textarea");
-  if (formInput) {
-    formInput.forEach((element) => {
+function generateForm(request, sendResponse) {
+  let results = [];
+  const formElements = document.querySelectorAll("form input, form textarea");
+  if (formElements) {
+    formElements.forEach((element) => {
       if (element.type === "submit" || element.type === "file") {
         return;
       }
@@ -39,35 +38,23 @@ function generateRule(request, sendResponse) {
         checked: element.checked,
       };
 
-      newRule.push(newdata);
-    });
-  }
-
-  if (formTextArea) {
-    formTextArea.forEach((element) => {
-      let newdata = {
-        name: element.name,
-        type: element.type,
-        value: element.value,
-      };
-
-      newRule.push(newdata);
+      results.push(newdata);
     });
   }
 
   let storageKey = `${request.name}:${request.tabId}`;
 
   chrome.storage.local.set({
-    [storageKey]: newRule,
+    [storageKey]: results,
   });
 
   sendResponse({ key: storageKey });
 }
 
-async function selectRule(request) {
+async function selectForm(request) {
   const data = await chrome.storage.local.get(request.key);
-  const formInput = document.querySelectorAll("input");
-  formInput.forEach((element) => {
+  const formElements = document.querySelectorAll("input");
+  formElements.forEach((element) => {
     data[request.key].forEach((el) => {
       if (el.name === element.name) {
         el.checked
@@ -81,15 +68,14 @@ async function selectRule(request) {
 async function fillForm() {
   const form = document.querySelector("form");
   if (form) {
-    const formInput = document.querySelectorAll("input");
-    const formTextArea = document.querySelectorAll("form textarea");
+    const formElements = document.querySelectorAll("form input, form textarea");
     const formSelect = document.querySelectorAll("form select");
     const formDatalist = document.querySelectorAll("form datalist");
 
-    if (formInput) {
-      formInput.forEach(async (element) => {
+    if (formElements) {
+      formElements.forEach(async (element) => {
         const response = await chrome.runtime.sendMessage({
-          type: "Autofill",
+          type: "AUTOFILL",
           inputType: element.type,
           min: element.min,
           max: element.max,
@@ -118,16 +104,6 @@ async function fillForm() {
       });
     }
 
-    if (formTextArea) {
-      formTextArea.forEach(async (element) => {
-        const response = await chrome.runtime.sendMessage({
-          type: "Autofill",
-          inputType: "textarea",
-        });
-        element.value = response.data;
-      });
-    }
-
     if (formSelect) {
       formSelect.forEach(async (element) => {
         const option = generateRandomVariable(element);
@@ -148,11 +124,10 @@ function clearForm() {
   const form = document.querySelector("form");
   clearNotification();
   if (form) {
-    const formInput = document.querySelectorAll("input");
-    const formTextArea = document.querySelectorAll("form textarea");
+    const formElements = document.querySelectorAll("form input, form textarea");
     const formSelect = document.querySelectorAll("form select");
 
-    formInput.forEach((element) => {
+    formElements.forEach((element) => {
       if (element.type === "image") {
         element.src = "";
       } else if (element.type === "checkbox" || element.type === "radio") {
@@ -162,10 +137,6 @@ function clearForm() {
       } else {
         element.value = null;
       }
-    });
-
-    formTextArea.forEach((element) => {
-      element.value = null;
     });
 
     formSelect.forEach((element) => {

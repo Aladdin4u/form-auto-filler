@@ -44,7 +44,7 @@ export function generateFormText(name) {
     return values[Math.floor(Math.random() * values.length)];
   } else {
     // Default value if name doesn't match any pattern
-    return "Unknown";
+    return names[Math.floor(Math.random() * names.length)];
   }
 }
 
