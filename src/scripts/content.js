@@ -75,8 +75,8 @@ async function fillForm() {
     if (formElements) {
       formElements.forEach(async (element) => {
         const response = await chrome.runtime.sendMessage({
-          type: "AUTOFILL",
-          inputType: element.type,
+          text: "AUTOFILL",
+          type: element.type,
           min: element.min,
           max: element.max,
           step: element.max,

@@ -19,9 +19,9 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.type == "AUTOFILL") {
+  if (request.text == "AUTOFILL") {
     let response, variable;
-    switch (request.inputType) {
+    switch (request.type) {
       case "text":
         response = generateFormText(request.name);
         break;

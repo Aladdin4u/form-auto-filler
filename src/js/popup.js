@@ -18,9 +18,6 @@ function toggleElement(tab, prevState) {
   checkboxInput.checked = isChecked;
 
   checkboxInput.addEventListener("click", async () => {
-    // Retrieve the action badge to check if the extension is 'ON' or 'OFF'
-    // const prevState = await chrome.action.getBadgeText({ tabId: tab.id });
-    // Next state will always be the opposite
     const nextState = prevState === "ON" ? "OFF" : "ON";
     // Set the action badge to the next state
     await chrome.action.setBadgeText({
@@ -40,30 +37,27 @@ function toggleElement(tab, prevState) {
   });
 }
 
-function generateRule(tab, ulElement) {
-  const generateRuleButton = document.getElementById("generate-rule");
+function generateForm(tab, ulElement) {
+  const generateFormButton = document.getElementById("generate-form");
 
-  generateRuleButton.addEventListener("click", () => {
+  generateFormButton.addEventListener("click", async () => {
     const name = prompt("enter profile name:");
     if (name == null) {
       return;
     }
 
-    chrome.tabs
-      .sendMessage(tab.id, {
-        tabId: tab.id,
-        text: "NEWFORM",
-        name: name,
-      })
-      .then((data) => {
-        const element = templateElement(data.key);
-        ulElement.appendChild(element);
-        refetch();
-      });
+    const data = await chrome.tabs.sendMessage(tab.id, {
+      tabId: tab.id,
+      text: "NEWFORM",
+      name: name,
+    });
+    const element = templateElement(data.key);
+    ulElement.appendChild(element);
+    refetch(tab, ulElement);
   });
 }
 
-function getAllRules(storeData, ulElement) {
+function getAllForms(storeData, ulElement) {
   const elements = new Set();
   for (const key in storeData) {
     const element = templateElement(key);
@@ -72,13 +66,12 @@ function getAllRules(storeData, ulElement) {
   ulElement.append(...elements);
 }
 
-
 function refetch(tab, ulElement) {
-  let profileRule = document.querySelectorAll(".title");
-  let editRule = document.querySelectorAll(".edit");
-  let deleteRule = document.querySelectorAll(".delete");
+  let profileForm = document.querySelectorAll(".title");
+  let editForm = document.querySelectorAll(".edit");
+  let deleteForm = document.querySelectorAll(".delete");
 
-  profileRule.forEach((element) => {
+  profileForm.forEach((element) => {
     element.addEventListener("click", async () => {
       chrome.tabs.sendMessage(tab.id, {
         text: "SELECTFORM",
@@ -87,7 +80,7 @@ function refetch(tab, ulElement) {
     });
   });
 
-  editRule.forEach((element) => {
+  editForm.forEach((element) => {
     element.addEventListener("click", async () => {
       chrome.tabs
         .sendMessage(tab.id, {
@@ -101,7 +94,7 @@ function refetch(tab, ulElement) {
     });
   });
 
-  deleteRule.forEach((element) => {
+  deleteForm.forEach((element) => {
     element.addEventListener("click", async () => {
       const parentElement = element.closest("li");
       await chrome.storage.local.remove(element.id);
@@ -122,9 +115,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     const storeData = await chrome.storage.local.get();
     const prevState = await chrome.action.getBadgeText({ tabId: tab.id });
 
-    toggleElement(tab, prevState)
-    generateRule(tab, ulElement)
-    getAllRules(storeData, ulElement);
+    toggleElement(tab, prevState);
+    generateForm(tab, ulElement);
+    getAllForms(storeData, ulElement);
     refetch(tab, ulElement);
   } else {
     const container = document.getElementsByClassName("container")[0];
