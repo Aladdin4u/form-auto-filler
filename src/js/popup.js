@@ -82,15 +82,13 @@ function refetch(tab, ulElement) {
 
   editForm.forEach((element) => {
     element.addEventListener("click", async () => {
-      chrome.tabs
-        .sendMessage(tab.id, {
-          text: "EDITFORM",
-        })
-        .then((data) => {
-          // redirect to option.html to edit profile
-          const newUrl = `chrome-extension://${data.url}/src/option.html?key=${element.id}`;
-          chrome.tabs.create({ url: newUrl });
-        });
+      const data = await chrome.tabs.sendMessage(tab.id, {
+        text: "EDITFORM",
+      });
+
+      // redirect to option.html to edit profile
+      const newUrl = `chrome-extension://${data.url}/src/option.html?key=${element.id}`;
+      chrome.tabs.create({ url: newUrl });
     });
   });
 
