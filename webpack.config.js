@@ -5,7 +5,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 module.exports = {
   entry: {
     popup: "./src/js/popup.js",
-    option: "./src/js/option.js",
+    content: "./src/scripts/content.js",
     serviceWorker: "./src/serviceWorker.js",
   },
   output: {

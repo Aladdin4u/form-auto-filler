@@ -87,7 +87,7 @@ function refetch(tab, ulElement) {
       });
 
       // redirect to option.html to edit profile
-      const newUrl = `chrome-extension://${data.url}/src/option.html?key=${element.id}`;
+      const newUrl = `chrome-extension://${data.url}/option.html?key=${element.id}`;
       chrome.tabs.create({ url: newUrl });
     });
   });
