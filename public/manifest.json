@@ -16,7 +16,7 @@
   ],
   "permissions": ["activeTab", "scripting", "storage"],
   "background": {
-    "service_worker": "./src/service-worker.js",
+    "service_worker": "./src/serviceWorker.js",
     "type": "module"
   },
   "icons": {
