@@ -1,3 +1,5 @@
+import { faker } from '@faker-js/faker';
+
 (() => {
   chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.text == "ON") {
