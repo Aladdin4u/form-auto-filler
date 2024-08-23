@@ -1,4 +1,17 @@
 import { faker } from '@faker-js/faker';
+import { emails } from "../utils/data.js";
+import {
+  generateFormText,
+  generateRandomUrl,
+  generateLoremText,
+  generateRandomDate,
+  generateRandomColor,
+  generateRandomRange,
+  generateRandomImage,
+  generateRandomPhone,
+  generateRandomVariable,
+  generateRandomPassword,
+} from "../utils/generator.js";
 
 (() => {
   chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
@@ -76,19 +89,68 @@ async function fillForm() {
 
     if (formElements) {
       formElements.forEach(async (element) => {
-        const response = await chrome.runtime.sendMessage({
-          text: "AUTOFILL",
-          type: element.type,
-          min: element.min,
-          max: element.max,
-          step: element.max,
-          width: element.width,
-          height: element.height,
-          name: element.name,
-          src: element.src,
-          pattern: element.pattern,
-        });
-        const data = response?.data;
+        let response, variable;
+        switch (element.type) {
+          case "text":
+            response = generateFormText(element.name);
+            break;
+          case "email":
+            response = faker.internet.email();
+            break;
+          case "color":
+            response = generateRandomColor();
+            break;
+          case "number":
+            response = generateRandomRange(element.min, element.max, element.step);
+            break;
+          case "range":
+            response = generateRandomRange(element.min, element.max, element.step);
+            break;
+          case "time":
+            variable = generateRandomDate(element.min, element.max);
+            response = variable.slice(11, -8);
+            break;
+          case "date":
+            variable = generateRandomDate(element.min, element.max);
+            response = variable.slice(0, 10);
+            break;
+          case "datetime-local":
+            variable = generateRandomDate(element.min, element.max);
+            response = variable.slice(0, 16);
+            break;
+          case "month":
+            variable = generateRandomDate(element.min, element.max);
+            response = variable.slice(0, 7);
+            break;
+          case "tel":
+            variable = generateRandomPhone(element.pattern);
+            response = variable;
+            break;
+          case "checkbox":
+            response = generateRandomVariable([true, false]);
+            break;
+          case "radio":
+            response = generateRandomVariable([true, false]);
+            break;
+          case "url":
+            response = generateRandomUrl();
+            break;
+          case "image":
+            response = generateRandomImage(
+              element.width,
+              element.height,
+              element.name
+            );
+            break;
+          case "password":
+            response = generateRandomPassword();
+            break;
+          case "textarea":
+            response = generateLoremText();
+            break;
+        }
+        variable = null;
+        const data = response;
         if (element.type === "radio" || element.type === "checkbox") {
           element.checked = data;
         } else if (element.type === "image") {
@@ -153,12 +215,6 @@ function clearNotification() {
   if (ifNotificationExist) {
     bodyElement.removeChild(ifNotificationExist);
   }
-}
-
-function generateRandomVariable(data) {
-  const random = Math.floor(Math.random() * data.length);
-  const value = data[random];
-  return value;
 }
 
 function createNotification(value) {
