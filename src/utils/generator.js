@@ -9,6 +9,7 @@ import {
   countryList,
   loremTextArray,
 } from "./data.js";
+import { faker } from "@faker-js/faker";
 
 function randomValue(value) {
   return Math.floor(Math.random() * value.length);
@@ -31,6 +32,15 @@ export function generateFormText(name) {
     street: streets,
     country: countryList,
     address: generateRandomAddress(),
+    bio: faker.person.bio(),
+    firstName: faker.person.firstName(),
+    lastName: faker.person.lastName(),
+    middleName: faker.person.middleName(),
+    fullName: faker.person.fullName(),
+    sex: faker.person.gender(),
+    jobArea: faker.person.jobArea(),
+    jobDescriptor: faker.person.jobDescriptor(),
+    jobTitle: faker.person.jobTitle(),
     // Add more patterns as needed
   };
 
@@ -39,9 +49,13 @@ export function generateFormText(name) {
     if (name === "address") {
       return patterns[name];
     }
-    const values = patterns[name];
-    // Randomly select a value from the pattern
-    return values[Math.floor(Math.random() * values.length)];
+    if (Array.isArray(patterns[name])) {
+      const values = patterns[name];
+      // Randomly select a value from the pattern
+      return values[Math.floor(Math.random() * values.length)];
+    } else {
+      return patterns[name];
+    }
   } else {
     // Default value if name doesn't match any pattern
     return names[Math.floor(Math.random() * names.length)];
