@@ -21,8 +21,10 @@ export function generateRandomVariable(data) {
   return value;
 }
 
-export function generateFormText(name) {
-  name = name.toLowerCase();
+export function generateFormText(text) {
+  const regex = /(-)|(_)/g;
+  const replaceUnderscore = text.replace(regex, "");
+  const name = replaceUnderscore.toLowerCase();
 
   // Define regex patterns for each character class
   const patterns = {
@@ -33,14 +35,14 @@ export function generateFormText(name) {
     country: countryList,
     address: generateRandomAddress(),
     bio: faker.person.bio(),
-    firstName: faker.person.firstName(),
-    lastName: faker.person.lastName(),
-    middleName: faker.person.middleName(),
-    fullName: faker.person.fullName(),
+    firstname: faker.person.firstName(),
+    lastname: faker.person.lastName(),
+    middlename: faker.person.middleName(),
+    fullname: faker.person.fullName(),
     sex: faker.person.gender(),
-    jobArea: faker.person.jobArea(),
-    jobDescriptor: faker.person.jobDescriptor(),
-    jobTitle: faker.person.jobTitle(),
+    jobarea: faker.person.jobArea(),
+    jobdescriptor: faker.person.jobDescriptor(),
+    jobtitle: faker.person.jobTitle(),
     // Add more patterns as needed
   };
 
