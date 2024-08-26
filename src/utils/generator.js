@@ -8,6 +8,11 @@ import {
   countryCode,
   countryList,
   loremTextArray,
+  animal,
+  genres,
+  cardType,
+  zodiacSigns,
+  manufacturers,
 } from "./data.js";
 import { faker } from "@faker-js/faker";
 
@@ -32,17 +37,31 @@ export function generateFormText(text) {
     city: cities,
     state: states,
     street: streets,
+    timezone: faker.location.timeZone(),
+    zipcode: faker.location.zipCode(),
     country: countryList,
+    countrycode: faker.location.countryCode(),
+    latitude: faker.location.latitude(),
+    longitude: faker.location.longitude(),
+    coordinate: faker.location.nearbyGPSCoordinate(),
     address: generateRandomAddress(),
     bio: faker.person.bio(),
+    username: faker.internet.userName(),
     firstname: faker.person.firstName(),
     lastname: faker.person.lastName(),
     middlename: faker.person.middleName(),
-    fullname: faker.person.fullName(),
-    sex: faker.person.gender(),
+    fullname: generateFullname(),
+    zodiacSign: zodiacSigns,
+    sex: ["male", "female"],
     jobarea: faker.person.jobArea(),
     jobdescriptor: faker.person.jobDescriptor(),
     jobtitle: faker.person.jobTitle(),
+    genre: genres,
+    songname: faker.music.songName(),
+    imei: generateRandomNumber(15, true),
+    animal: animal,
+    cardtype: cardType,
+    manufacturer: manufacturers,
     // Add more patterns as needed
   };
 
@@ -62,6 +81,12 @@ export function generateFormText(text) {
     // Default value if name doesn't match any pattern
     return names[Math.floor(Math.random() * names.length)];
   }
+}
+
+function generateFullname() {
+  const firstName = names[randomValue(names)];
+  const lastName = names[randomValue(names)];
+  return `${firstName} ${lastName}`;
 }
 
 function generateRandomAddress() {
@@ -118,16 +143,18 @@ export function generateRandomColor() {
   return color;
 }
 
-export function generateRandomNumber(length) {
+export function generateRandomNumber(length, trim = false) {
   let arrayLength = length ? length : 10;
   let newNumber = "";
   const numberArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   for (let i = 0; i < arrayLength; i++) {
-    if (newNumber.length == 3) {
-      newNumber += " ";
-    } else if (newNumber.length == 7) {
-      newNumber += " ";
+    if (!trim) {
+      if (newNumber.length == 3) {
+        newNumber += "-";
+      } else if (newNumber.length == 7) {
+        newNumber += "-";
+      }
     }
     newNumber += numberArray[randomValue(numberArray)];
   }

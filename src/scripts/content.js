@@ -1,4 +1,3 @@
-import { faker } from '@faker-js/faker';
 import { emails } from "../utils/data.js";
 import {
   generateFormText,
@@ -95,7 +94,7 @@ async function fillForm() {
             response = generateFormText(element.name);
             break;
           case "email":
-            response = faker.internet.email();
+            response = generateRandomVariable(emails);
             break;
           case "color":
             response = generateRandomColor();
