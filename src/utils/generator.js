@@ -13,6 +13,7 @@ import {
   cardType,
   zodiacSigns,
   manufacturers,
+  timeZones,
 } from "./data.js";
 import { faker } from "@faker-js/faker";
 
@@ -37,7 +38,7 @@ export function generateFormText(text) {
     city: cities,
     state: states,
     street: streets,
-    timezone: faker.location.timeZone(),
+    timezone: timeZones,
     zipcode: faker.location.zipCode(),
     country: countryList,
     countrycode: faker.location.countryCode(),
