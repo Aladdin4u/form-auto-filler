@@ -15,6 +15,14 @@ import {
   manufacturers,
   timeZones,
   countryCodes,
+  jobAreas,
+  levels,
+  fields,
+  roles,
+  traits,
+  professions,
+  hobbies,
+  goals,
 } from "./data.js";
 import { faker } from "@faker-js/faker";
 
@@ -32,6 +40,55 @@ export function generateRandomZipCode() {
   return Math.floor(10000 + Math.random() * 90000);
 }
 
+export function generateLatitude() {
+  return (Math.random() * 180 - 90).toFixed(6);
+}
+
+export function generateLongitude() {
+  return (Math.random() * 360 - 180).toFixed(6);
+}
+
+export function generateNearbyCoordinate() {
+  const lag = generateLatitude();
+  const lng = generateLongitude();
+  const maxDistanceInMeters = 1000;
+  const earthRadius = 6371000;
+
+  const maxDistanceInDegrees =
+    (maxDistanceInMeters / earthRadius) * (180 / Math.PI);
+
+  const latOffset = (Math.random() - 0.5) * 2 * maxDistanceInDegrees;
+  const lngOffset =
+    ((Math.random() - 0.5) * 2 * maxDistanceInDegrees) /
+    Math.cos(lat * (Math.PI / 180));
+
+  const newLat = lat + latOffset;
+  const newLng = lng + lngOffset;
+
+  return [newLat.toFixed(6), newLng.toFixed(6)];
+}
+
+export function generateBio() {
+  // Randomly select one element from each array
+  const trait = traits[randomValue(traits)];
+  const profession = professions[randomValue(professions)];
+  const hobby = hobbies[randomValue(hobbies)];
+  const goal = goals[randomValue(goals)];
+
+  // Create a bio sentence
+  return `A ${trait} ${profession} who loves ${hobby} and is passionate about ${goal}.`;
+}
+
+export function generateJobDescriptor() {
+  // Randomly select one element from each array
+  const level = levels[randomValue(levels)];
+  const field = fields[randomValue(fields)];
+  const role = roles[randomValue(roles)];
+
+  // Combine selections to form a job descriptor
+  return `${level} ${field} ${role}`;
+}
+
 export function generateFormText(text) {
   const regex = /(-)|(_)/g;
   const replaceUnderscore = text.replace(regex, "");
@@ -47,20 +104,20 @@ export function generateFormText(text) {
     zipcode: generateRandomZipCode(),
     country: countryList,
     countrycode: countryCodes,
-    latitude: faker.location.latitude(),
-    longitude: faker.location.longitude(),
-    coordinate: faker.location.nearbyGPSCoordinate(),
+    latitude: generateLatitude(),
+    longitude: generateLongitude(),
+    coordinate: generateNearbyCoordinate(),
     address: generateRandomAddress(),
-    bio: faker.person.bio(),
-    username: faker.internet.userName(),
-    firstname: faker.person.firstName(),
-    lastname: faker.person.lastName(),
-    middlename: faker.person.middleName(),
+    bio: generateBio(),
+    username: names[randomValue(names)],
+    firstname: names[randomValue(names)],
+    lastname: names[randomValue(names)],
+    middlename: names[randomValue(names)],
     fullname: generateFullname(),
     zodiacSign: zodiacSigns,
     sex: ["male", "female"],
-    jobarea: faker.person.jobArea(),
-    jobdescriptor: faker.person.jobDescriptor(),
+    jobarea: jobAreas,
+    jobdescriptor: generateJobDescriptor(),
     jobtitle: faker.person.jobTitle(),
     genre: genres,
     songname: faker.music.songName(),

@@ -9207,3 +9207,103 @@ export const countryCodes = [
   "JM",
   "PR",
 ];
+
+export const traits = [
+  "passionate",
+  "adventurous",
+  "curious",
+  "creative",
+  "dedicated",
+];
+
+export const professions = [
+  "developer",
+  "designer",
+  "artist",
+  "writer",
+  "photographer",
+];
+
+export const hobbies = ["hiking", "reading", "traveling", "cooking", "gaming"];
+
+export const goals = [
+  "exploring new horizons",
+  "making a positive impact",
+  "connecting with people",
+  "learning every day",
+  "inspiring others",
+];
+
+export const jobAreas = [
+  "Engineering",
+  "Healthcare",
+  "Education",
+  "Finance",
+  "Marketing",
+  "Information Technology",
+  "Human Resources",
+  "Sales",
+  "Customer Service",
+  "Legal",
+  "Manufacturing",
+  "Retail",
+  "Logistics",
+  "Real Estate",
+  "Consulting",
+  "Hospitality",
+  "Construction",
+  "Media & Entertainment",
+  "Research & Development",
+  "Nonprofit & Social Services",
+  "Public Relations",
+  "Government & Public Administration",
+  "Energy & Utilities",
+  "Transportation",
+  "Agriculture",
+];
+
+export const levels = [
+  "Junior",
+  "Senior",
+  "Lead",
+  "Chief",
+  "Principal",
+  "Associate",
+  "Assistant",
+];
+
+export const fields = [
+  "Software",
+  "Marketing",
+  "Sales",
+  "Product",
+  "Operations",
+  "Finance",
+  "Creative",
+  "Data",
+  "Business",
+  "Technical",
+  "Research",
+  "Customer",
+  "Quality",
+  "Project",
+  "Content",
+];
+
+export const roles = [
+  "Engineer",
+  "Manager",
+  "Specialist",
+  "Consultant",
+  "Coordinator",
+  "Analyst",
+  "Designer",
+  "Developer",
+  "Strategist",
+  "Administrator",
+  "Architect",
+  "Technician",
+  "Advisor",
+  "Planner",
+  "Director",
+];
