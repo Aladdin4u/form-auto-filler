@@ -29,7 +29,6 @@ import {
   nouns,
   themes,
 } from "./data.js";
-import { faker } from "@faker-js/faker";
 
 function randomValue(value) {
   return Math.floor(Math.random() * value.length);
@@ -100,7 +99,7 @@ export function generateJobDescriptor() {
     .sort(() => 0.5 - Math.random())
     .slice(0, 3);
   const selectedSkills = jobSkills.sort(() => 0.5 - Math.random()).slice(0, 3);
-  const selectedGoal = jobGoals[Math.floor(Math.random() * jobGoals.length)];
+  const selectedGoal = jobGoals[randomValue(jobGoals)];
 
   // Construct the job description
   return `
@@ -172,13 +171,13 @@ export function generateFormText(text) {
     if (Array.isArray(patterns[name])) {
       const values = patterns[name];
       // Randomly select a value from the pattern
-      return values[Math.floor(Math.random() * values.length)];
+      return values[randomValue(values)];
     } else {
       return patterns[name];
     }
   } else {
     // Default value if name doesn't match any pattern
-    return names[Math.floor(Math.random() * names.length)];
+    return names[randomValue(names)];
   }
 }
 
