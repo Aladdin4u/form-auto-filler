@@ -14,6 +14,7 @@ import {
   zodiacSigns,
   manufacturers,
   timeZones,
+  countryCodes,
 } from "./data.js";
 import { faker } from "@faker-js/faker";
 
@@ -25,6 +26,10 @@ export function generateRandomVariable(data) {
   const random = randomValue(data);
   const value = data[random];
   return value;
+}
+
+export function generateRandomZipCode() {
+  return Math.floor(10000 + Math.random() * 90000);
 }
 
 export function generateFormText(text) {
@@ -39,9 +44,9 @@ export function generateFormText(text) {
     state: states,
     street: streets,
     timezone: timeZones,
-    zipcode: faker.location.zipCode(),
+    zipcode: generateRandomZipCode(),
     country: countryList,
-    countrycode: faker.location.countryCode(),
+    countrycode: countryCodes,
     latitude: faker.location.latitude(),
     longitude: faker.location.longitude(),
     coordinate: faker.location.nearbyGPSCoordinate(),
