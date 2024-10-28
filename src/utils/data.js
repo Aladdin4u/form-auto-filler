@@ -9334,54 +9334,54 @@ export const jobSkills = [
   "ability to work under tight deadlines and manage multiple priorities",
 ];
 
- const jobGoals = [
-   "achieve department and company objectives",
-   "contribute to revenue growth and customer retention",
-   "support company expansion into new markets",
-   "drive product innovation and competitive positioning",
-   "enhance team productivity and engagement",
-   "improve user experience across all platforms",
-   "increase brand awareness and market share",
-   "optimize operational efficiency and reduce costs",
-   "develop sustainable practices and community impact",
-   "expand client base and customer satisfaction",
- ];
+export const jobGoals = [
+  "achieve department and company objectives",
+  "contribute to revenue growth and customer retention",
+  "support company expansion into new markets",
+  "drive product innovation and competitive positioning",
+  "enhance team productivity and engagement",
+  "improve user experience across all platforms",
+  "increase brand awareness and market share",
+  "optimize operational efficiency and reduce costs",
+  "develop sustainable practices and community impact",
+  "expand client base and customer satisfaction",
+];
 
- export const adjectives = [
-   "Silent",
-   "Lonely",
-   "Endless",
-   "Golden",
-   "Forgotten",
-   "Electric",
-   "Fading",
-   "Burning",
-   "Whispering",
-   "Shining",
- ];
+export const adjectives = [
+  "Silent",
+  "Lonely",
+  "Endless",
+  "Golden",
+  "Forgotten",
+  "Electric",
+  "Fading",
+  "Burning",
+  "Whispering",
+  "Shining",
+];
 
- export const nouns = [
-   "Dream",
-   "Night",
-   "Light",
-   "Shadow",
-   "Heart",
-   "River",
-   "Sky",
-   "Echo",
-   "Storm",
-   "Soul",
- ];
+export const nouns = [
+  "Dream",
+  "Night",
+  "Light",
+  "Shadow",
+  "Heart",
+  "River",
+  "Sky",
+  "Echo",
+  "Storm",
+  "Soul",
+];
 
- export  const themes = [
-   "of Love",
-   "of Time",
-   "in the Rain",
-   "of Tomorrow",
-   "for You",
-   "in the Dark",
-   "of the Sea",
-   "of Memories",
-   "of Hope",
-   "in the Wind",
- ];
+export const themes = [
+  "of Love",
+  "of Time",
+  "in the Rain",
+  "of Tomorrow",
+  "for You",
+  "in the Dark",
+  "of the Sea",
+  "of Memories",
+  "of Hope",
+  "in the Wind",
+];

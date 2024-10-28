@@ -28,6 +28,7 @@ import {
   adjectives,
   nouns,
   themes,
+  jobGoals,
 } from "./data.js";
 
 function randomValue(value) {
@@ -53,7 +54,7 @@ export function generateLongitude() {
 }
 
 export function generateNearbyCoordinate() {
-  const lag = generateLatitude();
+  const lat = generateLatitude();
   const lng = generateLongitude();
   const maxDistanceInMeters = 1000;
   const earthRadius = 6371000;
@@ -69,7 +70,7 @@ export function generateNearbyCoordinate() {
   const newLat = lat + latOffset;
   const newLng = lng + lngOffset;
 
-  return [newLat.toFixed(6), newLng.toFixed(6)];
+  return [parseInt(newLat).toFixed(6), parseInt(newLng).toFixed(6)];
 }
 
 export function generateBio() {
@@ -152,7 +153,7 @@ export function generateFormText(text) {
     zodiacSign: zodiacSigns,
     sex: ["male", "female"],
     jobarea: jobAreas,
-    jobdescriptor: generateJobDescriptor(),
+    jobdescripton: generateJobDescriptor(),
     jobtitle: generateJobTitle(),
     genre: genres,
     songname: generateSongName(),
