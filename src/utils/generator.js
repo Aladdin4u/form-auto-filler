@@ -23,6 +23,11 @@ import {
   professions,
   hobbies,
   goals,
+  responsibilities,
+  jobSkills,
+  adjectives,
+  nouns,
+  themes,
 } from "./data.js";
 import { faker } from "@faker-js/faker";
 
@@ -79,7 +84,7 @@ export function generateBio() {
   return `A ${trait} ${profession} who loves ${hobby} and is passionate about ${goal}.`;
 }
 
-export function generateJobDescriptor() {
+export function generateJobTitle() {
   // Randomly select one element from each array
   const level = levels[randomValue(levels)];
   const field = fields[randomValue(fields)];
@@ -87,6 +92,37 @@ export function generateJobDescriptor() {
 
   // Combine selections to form a job descriptor
   return `${level} ${field} ${role}`;
+}
+
+export function generateJobDescriptor() {
+  // Randomly select a few items from each array
+  const selectedResponsibilities = responsibilities
+    .sort(() => 0.5 - Math.random())
+    .slice(0, 3);
+  const selectedSkills = jobSkills.sort(() => 0.5 - Math.random()).slice(0, 3);
+  const selectedGoal = jobGoals[Math.floor(Math.random() * jobGoals.length)];
+
+  // Construct the job description
+  return `
+Job Responsibilities:
+- ${selectedResponsibilities.join("\n- ")}
+
+Required Skills:
+- ${selectedSkills.join("\n- ")}
+
+Goal:
+- Our aim is to ${selectedGoal}.
+    `;
+}
+
+function generateSongName() {
+  // Randomly select one word from each array
+  const adjective = adjectives[randomValue(adjectives)];
+  const noun = nouns[randomValue(nouns)];
+  const theme = themes[randomValue(themes)];
+
+  // Combine selections to form a song name
+  return `${adjective} ${noun} ${theme}`;
 }
 
 export function generateFormText(text) {
@@ -118,9 +154,9 @@ export function generateFormText(text) {
     sex: ["male", "female"],
     jobarea: jobAreas,
     jobdescriptor: generateJobDescriptor(),
-    jobtitle: faker.person.jobTitle(),
+    jobtitle: generateJobTitle(),
     genre: genres,
-    songname: faker.music.songName(),
+    songname: generateSongName(),
     imei: generateRandomNumber(15, true),
     animal: animal,
     cardtype: cardType,

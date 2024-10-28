@@ -9307,3 +9307,81 @@ export const roles = [
   "Planner",
   "Director",
 ];
+
+export const responsibilities = [
+  "Develop and implement strategies to improve team performance",
+  "Collaborate with cross-functional teams to drive project success",
+  "Analyze market trends and customer feedback to inform product development",
+  "Manage and oversee project timelines and budgets",
+  "Provide technical expertise and mentorship to team members",
+  "Design and optimize workflows for efficiency",
+  "Ensure quality control and compliance with industry standards",
+  "Identify and resolve operational issues in a timely manner",
+  "Assist in the development and execution of marketing campaigns",
+  "Prepare and present reports to senior management on project progress",
+];
+
+export const jobSkills = [
+  "strong communication and interpersonal skills",
+  "proficiency in project management software",
+  "expertise in data analysis and visualization tools",
+  "experience with agile methodologies",
+  "proficiency in coding languages such as JavaScript or Python",
+  "solid understanding of SEO and content marketing",
+  "knowledge of CRM software like Salesforce",
+  "excellent problem-solving abilities",
+  "attention to detail and organizational skills",
+  "ability to work under tight deadlines and manage multiple priorities",
+];
+
+ const jobGoals = [
+   "achieve department and company objectives",
+   "contribute to revenue growth and customer retention",
+   "support company expansion into new markets",
+   "drive product innovation and competitive positioning",
+   "enhance team productivity and engagement",
+   "improve user experience across all platforms",
+   "increase brand awareness and market share",
+   "optimize operational efficiency and reduce costs",
+   "develop sustainable practices and community impact",
+   "expand client base and customer satisfaction",
+ ];
+
+ export const adjectives = [
+   "Silent",
+   "Lonely",
+   "Endless",
+   "Golden",
+   "Forgotten",
+   "Electric",
+   "Fading",
+   "Burning",
+   "Whispering",
+   "Shining",
+ ];
+
+ export const nouns = [
+   "Dream",
+   "Night",
+   "Light",
+   "Shadow",
+   "Heart",
+   "River",
+   "Sky",
+   "Echo",
+   "Storm",
+   "Soul",
+ ];
+
+ export  const themes = [
+   "of Love",
+   "of Time",
+   "in the Rain",
+   "of Tomorrow",
+   "for You",
+   "in the Dark",
+   "of the Sea",
+   "of Memories",
+   "of Hope",
+   "in the Wind",
+ ];
