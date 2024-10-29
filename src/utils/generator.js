@@ -153,7 +153,6 @@ export function generateFormText(text) {
     zodiacSign: zodiacSigns,
     sex: ["male", "female"],
     jobarea: jobAreas,
-    jobdescripton: generateJobDescriptor(),
     jobtitle: generateJobTitle(),
     genre: genres,
     songname: generateSongName(),
@@ -289,6 +288,25 @@ export function generateLoremText() {
     loremText += paragraph.trim() + ". \n";
   }
   return loremText;
+}
+
+export function generateTextArea(text) {
+  const regex = /(-)|(_)/g;
+  const replaceUnderscore = text.replace(regex, "");
+  const name = replaceUnderscore.toLowerCase();
+
+  // Define regex patterns for each character class
+  const patterns = {
+    jobdescripton: generateJobDescriptor(),
+  };
+
+  // Check if the name exists in the patterns
+  if (patterns.hasOwnProperty(name)) {
+    return patterns[name];
+  } else {
+    // Default value if name doesn't match any pattern
+    return generateLoremText();
+  }
 }
 
 export function generateRandomUrl() {

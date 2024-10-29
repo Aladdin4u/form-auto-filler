@@ -2,7 +2,6 @@ import { emails } from "../utils/data.js";
 import {
   generateFormText,
   generateRandomUrl,
-  generateLoremText,
   generateRandomDate,
   generateRandomColor,
   generateRandomRange,
@@ -10,6 +9,7 @@ import {
   generateRandomPhone,
   generateRandomVariable,
   generateRandomPassword,
+  generateTextArea,
 } from "../utils/generator.js";
 
 (() => {
@@ -145,7 +145,7 @@ async function fillForm() {
             response = generateRandomPassword();
             break;
           case "textarea":
-            response = generateLoremText();
+            response = generateTextArea(element.name);
             break;
         }
         variable = null;
