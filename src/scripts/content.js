@@ -67,7 +67,7 @@ function generateForm(request, sendResponse) {
 
 async function selectForm(request) {
   const data = await chrome.storage.local.get(request.key);
-  const formElements = document.querySelectorAll("input");
+  const formElements = document.querySelectorAll("form input, form textarea");
   formElements.forEach((element) => {
     data[request.key].forEach((el) => {
       if (el.name === element.name) {
