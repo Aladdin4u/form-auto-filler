@@ -100,10 +100,18 @@ async function fillForm() {
             response = generateRandomColor();
             break;
           case "number":
-            response = generateRandomRange(element.min, element.max, element.step);
+            response = generateRandomRange(
+              element.min,
+              element.max,
+              element.step
+            );
             break;
           case "range":
-            response = generateRandomRange(element.min, element.max, element.step);
+            response = generateRandomRange(
+              element.min,
+              element.max,
+              element.step
+            );
             break;
           case "time":
             variable = generateRandomDate(element.min, element.max);
@@ -226,10 +234,10 @@ function createNotification(value) {
   const copyElement = document.createElement("button");
 
   containerElement.id = "notification";
-  let containerStyles = `position:relative;max-width:356px;background-color:white;margin: 4px auto;padding:8px;border-radius:8px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);`;
+  let containerStyles = `position:fixed;top:4px;max-width:356px;background-color:white;margin: 4px auto;padding:8px;border-radius:8px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);`;
   const animateTop = [
     { top: "-300px", opacity: 0 },
-    { top: 0, opacity: 1 },
+    { top: "4px", opacity: 1 },
   ];
   const animateOption = { duration: 400 };
   containerElement.animate(animateTop, animateOption);
