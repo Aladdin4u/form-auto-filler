@@ -85,7 +85,7 @@ async function fillForm() {
     const formElements = document.querySelectorAll("form input, form textarea");
     const formSelect = document.querySelectorAll("form select");
     const formDatalist = document.querySelectorAll("form datalist");
-
+    let password;
     if (formElements) {
       formElements.forEach(async (element) => {
         let response, variable;
@@ -165,10 +165,15 @@ async function fillForm() {
         } else if (element.type === "file" || element.list) {
           return;
         } else if (element.type === "password") {
-          element.value = data;
-          setTimeout(() => {
-            createNotification(data);
-          }, 300);
+          if (element.name === "password") {
+            password = data;
+            element.value = password;
+            setTimeout(() => {
+              createNotification(data);
+            }, 300);
+          } else {
+            element.value = password;
+          }
         } else {
           element.value = data;
         }
