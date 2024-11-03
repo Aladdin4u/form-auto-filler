@@ -365,7 +365,7 @@ export function generatePhoneNumberPattern(pattern) {
       // If bracket is encountered, extract the repeat count
       const endIndex = pattern.indexOf("]", i);
       const range = pattern.substring(i + 1, endIndex);
-      console.log("range", range);
+
       const parts = range.split("-");
       const min = parseInt(parts[0]);
       const max = parseInt(parts[1]);

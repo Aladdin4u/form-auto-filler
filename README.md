@@ -11,13 +11,40 @@ Feedback and contribute are highly appreciated!
 
 Google Chrome browser
 
+### Usage
+
+- All form input element must include name attribute for extension to work well
+- name attribute can in snake_case, camelCase, PascalCase
+
+```
+<form>
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username">
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email">
+    <label for="cars">Choose a car:</label>
+    <select id="cars" name="cars" size="3">
+    <option value="volvo">Volvo</option>
+    <option value="saab">Saab</option>
+    <option value="fiat">Fiat</option>
+    <option value="audi">Audi</option>
+    </select>
+    <label for="job descripton">Job Discription:</label>
+    <textarea
+        name="job_descripton"
+        rows="10"
+        cols="30"
+    ></textarea>
+</form>
+```
+
 ### Installing
 
 - Clone this repo. run `git clone https://github.com/Aladdin4u/form-auto-filler.git`
 - Open Google Chrome
 - Go to the Extensions page by entering `chrome://extensions` in a new tab.
 - Click the Load unpacked button and select the extension directory.
-  
+
 With that done you have successfully the extension and you can start using it in development
 
 ## Features
@@ -44,4 +71,3 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
