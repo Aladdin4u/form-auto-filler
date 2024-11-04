@@ -14,7 +14,7 @@ Google Chrome browser
 ### Usage
 
 - All form input element must include name attribute for extension to work well
-- name attribute can in snake_case, camelCase, PascalCase
+- name attribute can be in snake_case, camelCase, or PascalCase
 
 ```
 <form>
