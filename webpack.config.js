@@ -19,7 +19,7 @@ module.exports = {
       filename: "popup.html",
     }),
     new CopyPlugin({
-      patterns: [{ from: "public" }],
+      patterns: [{ from: "public", info: { minimized: true } }],
     }),
   ],
 };
